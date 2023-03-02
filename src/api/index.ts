@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from "axios";
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
 import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
@@ -11,10 +11,11 @@ import router from "@/routers";
 const config = {
 	// 默认地址请求地址，可在 .env.*** 文件中修改
 	baseURL: import.meta.env.VITE_API_URL as string,
+	// baseURL: "http://localhost:5000",
 	// 设置超时时间（10s）
 	timeout: ResultEnum.TIMEOUT as number,
 	// 跨域时候允许携带凭证
-	withCredentials: true
+	withCredentials: false
 };
 
 class RequestHttp {
@@ -34,6 +35,7 @@ class RequestHttp {
 				// * 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见loginApi
 				config.headers!.noLoading || showFullScreenLoading();
 				const token = globalStore.token;
+				console.log(config);
 				return { ...config, headers: { ...config.headers, "x-access-token": token } };
 			},
 			(error: AxiosError) => {
@@ -46,7 +48,7 @@ class RequestHttp {
 		 *  服务器换返回信息 -> [拦截统一处理] -> 客户端JS获取到信息
 		 */
 		this.service.interceptors.response.use(
-			(response: AxiosResponse) => {
+			async (response: AxiosResponse) => {
 				const { data } = response;
 				const globalStore = GlobalStore();
 				// * 在请求结束后，并关闭请求 loading
@@ -54,7 +56,7 @@ class RequestHttp {
 				// * 登陆失效（code == 401）
 				if (data.code == ResultEnum.OVERDUE) {
 					ElMessage.error(data.msg);
-					globalStore.setToken("");
+					globalStore.setToken("", "");
 					router.replace(LOGIN_URL);
 					return Promise.reject(data);
 				}
@@ -64,6 +66,32 @@ class RequestHttp {
 					return Promise.reject(data);
 				}
 				// * 成功请求（在页面上除非特殊情况，否则不用在页面处理失败逻辑）
+
+				// * 请求刷新token，access_token过期 refresh_token
+				// const {headers} = response
+				// if(headers.toJSON?.valueOf()){
+				// 	console.log("登录过期，开始续约");
+				// }S
+				// console.log(response.headers);
+				// response.headers.get()
+				if (response.headers.has && (response.headers as AxiosResponseHeaders).has("Token-Expired")) {
+					const refreshToken: string = "";
+					let data = new FormData();
+					data.append("refreshToken", refreshToken);
+					const res = await axios({
+						url: "/api/auth/refresh",
+						method: "post",
+						data: data,
+						headers: {
+							Authorization: "Bearer " + refreshToken,
+							"Content-Type": "multipart/form-data"
+						}
+					});
+					if (res && res.data?.code === 200) {
+						globalStore.setToken(res.data.accessToken, res.data.refreshToken);
+					}
+				}
+
 				return data;
 			},
 			async (error: AxiosError) => {

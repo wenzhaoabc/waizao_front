@@ -21,6 +21,7 @@ import NProgress from "@/config/nprogress";
  * @param meta.isFull ==> 是否全屏(示例：数据大屏页面)
  * @param meta.isAffix ==> 是否固定在 tabs nav
  * @param meta.isKeepAlive ==> 是否缓存
+ * @param meta.roles ==> 能访问该路由的角色
  * */
 const router = createRouter({
 	history: createWebHashHistory(),

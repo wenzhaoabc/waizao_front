@@ -12,6 +12,8 @@ export const GlobalStore = defineStore({
 	state: (): GlobalState => ({
 		// token
 		token: "",
+		// refreshToken
+		refreshToken: "",
 		// userInfo
 		userInfo: "",
 		// element组件大小
@@ -49,12 +51,21 @@ export const GlobalStore = defineStore({
 	getters: {},
 	actions: {
 		// setToken
-		setToken(token: string) {
+		// setToken(token: string) {
+		// 	this.token = token;
+		// },
+		// setToken
+		setToken(token: string, refreshToken: string) {
 			this.token = token;
+			this.refreshToken = refreshToken;
+		},
+		// setRefreshToken
+		setRefreshToken(refreshToken: string) {
+			this.refreshToken = refreshToken;
 		},
 		// setUserInfo
 		setUserInfo(userInfo: any) {
-			this.userInfo = userInfo;
+			this.userInfo = { ...userInfo, roles: userInfo.roles.split(",") };
 		},
 		// setAssemblySizeSize
 		setAssemblySizeSize(assemblySize: AssemblySizeType) {

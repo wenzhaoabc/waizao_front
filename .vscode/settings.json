@@ -1,5 +1,6 @@
 {
 	"editor.formatOnSave": true,
+	"files.autoSave": "afterDelay",
 	"stylelint.enable": true,
 	"editor.codeActionsOnSave": {
 		"source.fixAll.stylelint": true
@@ -67,6 +68,7 @@
 		"fangda",
 		"fastmock",
 		"Geeker",
+		"DaoXiangLi",
 		"Gitee",
 		"hexs",
 		"iconfont",

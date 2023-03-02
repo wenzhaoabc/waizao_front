@@ -1,6 +1,7 @@
 /* GlobalState */
 export interface GlobalState {
 	token: string;
+	refreshToken: string;
 	userInfo: any;
 	assemblySize: AssemblySizeType;
 	language: string;
