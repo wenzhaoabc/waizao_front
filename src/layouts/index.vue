@@ -1,7 +1,7 @@
 <!-- 💥 这里是一次性加载 LayoutComponents -->
 <template>
-	<component :is="LayoutComponents[themeConfig.layout]" />
-	<ThemeDrawer />
+  <component :is="LayoutComponents[themeConfig.layout]" />
+  <ThemeDrawer />
 </template>
 
 <script setup lang="ts" name="layout">

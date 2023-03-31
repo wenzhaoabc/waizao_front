@@ -1,8 +1,8 @@
 <template>
-	<div class="tool-bar-lf">
-		<CollapseIcon id="collapseIcon" />
-		<Breadcrumb id="breadcrumb" v-if="themeConfig.breadcrumb" />
-	</div>
+  <div class="tool-bar-lf">
+    <CollapseIcon id="collapseIcon" />
+    <Breadcrumb id="breadcrumb" v-if="themeConfig.breadcrumb" />
+  </div>
 </template>
 
 <script setup lang="ts">

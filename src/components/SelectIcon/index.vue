@@ -1,31 +1,31 @@
 <template>
-	<div class="icon-box">
-		<el-input
-			ref="inputRef"
-			v-model="valueIcon"
-			v-bind="$attrs"
-			:placeholder="placeholder"
-			:clearable="clearable"
-			@clear="clearIcon"
-			@click="openDialog"
-		>
-			<template #append>
-				<el-button :icon="customIcons[iconValue]" />
-			</template>
-		</el-input>
-		<el-dialog v-model="dialogVisible" :title="placeholder" top="50px" width="66%">
-			<el-input v-model="inputValue" placeholder="搜索图标" size="large" :prefix-icon="Icons.Search" />
-			<el-scrollbar v-if="Object.keys(iconsList).length">
-				<div class="icon-list">
-					<div v-for="item in iconsList" :key="item" class="icon-item" @click="selectIcon(item)">
-						<component :is="item"></component>
-						<span>{{ item.name }}</span>
-					</div>
-				</div>
-			</el-scrollbar>
-			<el-empty description="未搜索到您要找的图标~" v-else />
-		</el-dialog>
-	</div>
+  <div class="icon-box">
+    <el-input
+      ref="inputRef"
+      v-model="valueIcon"
+      v-bind="$attrs"
+      :placeholder="placeholder"
+      :clearable="clearable"
+      @clear="clearIcon"
+      @click="openDialog"
+    >
+      <template #append>
+        <el-button :icon="customIcons[iconValue]" />
+      </template>
+    </el-input>
+    <el-dialog v-model="dialogVisible" :title="placeholder" top="50px" width="66%">
+      <el-input v-model="inputValue" placeholder="搜索图标" size="large" :prefix-icon="Icons.Search" />
+      <el-scrollbar v-if="Object.keys(iconsList).length">
+        <div class="icon-list">
+          <div v-for="item in iconsList" :key="item" class="icon-item" @click="selectIcon(item)">
+            <component :is="item" />
+            <span>{{ item.name }}</span>
+          </div>
+        </div>
+      </el-scrollbar>
+      <el-empty description="未搜索到您要找的图标~" v-else />
+    </el-dialog>
+  </div>
 </template>
 
 <script setup lang="ts" name="SelectIcon">

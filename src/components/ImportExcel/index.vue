@@ -1,36 +1,36 @@
 <template>
-	<el-dialog v-model="dialogVisible" :title="`批量添加${parameter.title}`" :destroy-on-close="true" width="580px" draggable>
-		<el-form class="drawer-multiColumn-form" label-width="100px">
-			<el-form-item label="模板下载 :">
-				<el-button type="primary" :icon="Download" @click="downloadTemp">点击下载</el-button>
-			</el-form-item>
-			<el-form-item label="文件上传 :">
-				<el-upload
-					action="string"
-					class="upload"
-					:drag="true"
-					:limit="excelLimit"
-					:multiple="true"
-					:show-file-list="true"
-					:http-request="uploadExcel"
-					:before-upload="beforeExcelUpload"
-					:on-exceed="handleExceed"
-					:on-success="excelUploadSuccess"
-					:on-error="excelUploadError"
-					accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-				>
-					<el-icon class="el-icon--upload"><upload-filled /></el-icon>
-					<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-					<template #tip>
-						<div class="el-upload__tip">请上传 .xls , .xlsx 标准格式文件</div>
-					</template>
-				</el-upload>
-			</el-form-item>
-			<el-form-item label="数据覆盖 :">
-				<el-switch v-model="isCover" />
-			</el-form-item>
-		</el-form>
-	</el-dialog>
+  <el-dialog v-model="dialogVisible" :title="`批量添加${parameter.title}`" :destroy-on-close="true" width="580px" draggable>
+    <el-form class="drawer-multiColumn-form" label-width="100px">
+      <el-form-item label="模板下载 :">
+        <el-button type="primary" :icon="Download" @click="downloadTemp">点击下载</el-button>
+      </el-form-item>
+      <el-form-item label="文件上传 :">
+        <el-upload
+          action="string"
+          class="upload"
+          :drag="true"
+          :limit="excelLimit"
+          :multiple="true"
+          :show-file-list="true"
+          :http-request="uploadExcel"
+          :before-upload="beforeExcelUpload"
+          :on-exceed="handleExceed"
+          :on-success="excelUploadSuccess"
+          :on-error="excelUploadError"
+          accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        >
+          <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <template #tip>
+            <div class="el-upload__tip">请上传 .xls , .xlsx 标准格式文件</div>
+          </template>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="数据覆盖 :">
+        <el-switch v-model="isCover" />
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup lang="ts" name="ImportExcel">

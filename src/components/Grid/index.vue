@@ -1,7 +1,7 @@
 <template>
-	<div :style="style">
-		<slot></slot>
-	</div>
+  <div :style="style">
+    <slot />
+  </div>
 </template>
 
 <script setup lang="ts" name="Grid">

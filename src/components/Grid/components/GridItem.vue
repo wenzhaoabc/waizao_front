@@ -1,7 +1,7 @@
 <template>
-	<div :style="style" v-show="isShow">
-		<slot></slot>
-	</div>
+  <div :style="style" v-show="isShow">
+    <slot />
+  </div>
 </template>
 <script setup lang="ts" name="GridItem">
 import { computed, inject, Ref, ref, useAttrs, watch } from "vue";

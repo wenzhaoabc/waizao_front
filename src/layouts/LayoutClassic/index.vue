@@ -1,39 +1,39 @@
 <!-- 经典布局 -->
 <template>
-	<el-container class="layout">
-		<el-header>
-			<div class="header-lf">
-				<div class="logo flx-center">
-					<img src="@/assets/images/logo.svg" alt="logo" />
-					<span>DaoXiangLi</span>
-				</div>
-				<ToolBarLeft />
-			</div>
-			<ToolBarRight />
-		</el-header>
-		<el-container class="classic-content">
-			<el-aside>
-				<div class="menu" :style="{ width: isCollapse ? '65px' : '210px' }">
-					<el-scrollbar>
-						<el-menu
-							:default-active="activeMenu"
-							:router="false"
-							:collapse="isCollapse"
-							:collapse-transition="false"
-							:unique-opened="true"
-							background-color="#ffffff"
-							text-color="#303133"
-						>
-							<SubMenu :menuList="menuList" />
-						</el-menu>
-					</el-scrollbar>
-				</div>
-			</el-aside>
-			<el-container class="classic-main">
-				<Main />
-			</el-container>
-		</el-container>
-	</el-container>
+  <el-container class="layout">
+    <el-header>
+      <div class="header-lf">
+        <div class="logo flx-center">
+          <img src="@/assets/images/logo.svg" alt="logo">
+          <span>DaoXiangLi</span>
+        </div>
+        <ToolBarLeft />
+      </div>
+      <ToolBarRight />
+    </el-header>
+    <el-container class="classic-content">
+      <el-aside>
+        <div class="menu" :style="{ width: isCollapse ? '65px' : '210px' }">
+          <el-scrollbar>
+            <el-menu
+              :default-active="activeMenu"
+              :router="false"
+              :collapse="isCollapse"
+              :collapse-transition="false"
+              :unique-opened="true"
+              background-color="#ffffff"
+              text-color="#303133"
+            >
+              <SubMenu :menuList="menuList" />
+            </el-menu>
+          </el-scrollbar>
+        </div>
+      </el-aside>
+      <el-container class="classic-main">
+        <Main />
+      </el-container>
+    </el-container>
+  </el-container>
 </template>
 
 <script setup lang="ts" name="layoutClassic">

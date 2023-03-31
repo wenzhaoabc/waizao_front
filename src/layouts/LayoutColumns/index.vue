@@ -1,52 +1,52 @@
 <!-- 分栏布局 -->
 <template>
-	<el-container class="layout">
-		<div class="aside-split">
-			<div class="logo flx-center">
-				<img src="@/assets/images/logo.svg" alt="logo" />
-			</div>
-			<el-scrollbar>
-				<div class="split-list">
-					<div
-						class="split-item"
-						:class="{ 'split-active': splitActive === item.path || `/${splitActive.split('/')[1]}` === item.path }"
-						v-for="item in menuList"
-						:key="item.path"
-						@click="changeSubMenu(item)"
-					>
-						<el-icon>
-							<component :is="item.meta.icon"></component>
-						</el-icon>
-						<span class="title">{{ item.meta.title }}</span>
-					</div>
-				</div>
-			</el-scrollbar>
-		</div>
-		<el-aside :class="{ 'not-aside': !subMenu.length }" :style="{ width: isCollapse ? '65px' : '210px' }">
-			<div class="logo flx-center">
-				<span v-show="subMenu.length">{{ isCollapse ? "G" : "Geeker Admin" }}</span>
-			</div>
-			<el-scrollbar>
-				<el-menu
-					:default-active="activeMenu"
-					:router="false"
-					:collapse="isCollapse"
-					:collapse-transition="false"
-					:unique-opened="true"
-					background-color="#ffffff"
-				>
-					<SubMenu :menuList="subMenu" />
-				</el-menu>
-			</el-scrollbar>
-		</el-aside>
-		<el-container>
-			<el-header>
-				<ToolBarLeft />
-				<ToolBarRight />
-			</el-header>
-			<Main />
-		</el-container>
-	</el-container>
+  <el-container class="layout">
+    <div class="aside-split">
+      <div class="logo flx-center">
+        <img src="@/assets/images/logo.svg" alt="logo">
+      </div>
+      <el-scrollbar>
+        <div class="split-list">
+          <div
+            class="split-item"
+            :class="{ 'split-active': splitActive === item.path || `/${splitActive.split('/')[1]}` === item.path }"
+            v-for="item in menuList"
+            :key="item.path"
+            @click="changeSubMenu(item)"
+          >
+            <el-icon>
+              <component :is="item.meta.icon" />
+            </el-icon>
+            <span class="title">{{ item.meta.title }}</span>
+          </div>
+        </div>
+      </el-scrollbar>
+    </div>
+    <el-aside :class="{ 'not-aside': !subMenu.length }" :style="{ width: isCollapse ? '65px' : '210px' }">
+      <div class="logo flx-center">
+        <span v-show="subMenu.length">{{ isCollapse ? "G" : "Geeker Admin" }}</span>
+      </div>
+      <el-scrollbar>
+        <el-menu
+          :default-active="activeMenu"
+          :router="false"
+          :collapse="isCollapse"
+          :collapse-transition="false"
+          :unique-opened="true"
+          background-color="#ffffff"
+        >
+          <SubMenu :menuList="subMenu" />
+        </el-menu>
+      </el-scrollbar>
+    </el-aside>
+    <el-container>
+      <el-header>
+        <ToolBarLeft />
+        <ToolBarRight />
+      </el-header>
+      <Main />
+    </el-container>
+  </el-container>
 </template>
 
 <script setup lang="ts" name="layoutColumns">

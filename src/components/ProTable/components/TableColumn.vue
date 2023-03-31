@@ -1,5 +1,5 @@
 <template>
-	<component :is="renderLoop(column)"></component>
+  <component :is="renderLoop(column)" />
 </template>
 
 <script lang="tsx" setup name="TableColumn">

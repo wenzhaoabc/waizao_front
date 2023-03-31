@@ -1,18 +1,18 @@
 <template>
-	<Maximize v-if="themeConfig.maximize" />
-	<Tabs v-if="themeConfig.tabs" />
-	<el-main>
-		<router-view v-slot="{ Component, route }">
-			<transition appear name="fade-transform" mode="out-in">
-				<keep-alive :include="keepAliveStore.keepAliveName">
-					<component :is="Component" :key="route.path" v-if="isRouterShow" />
-				</keep-alive>
-			</transition>
-		</router-view>
-	</el-main>
-	<el-footer v-if="themeConfig.footer">
-		<Footer />
-	</el-footer>
+  <Maximize v-if="themeConfig.maximize" />
+  <Tabs v-if="themeConfig.tabs" />
+  <el-main>
+    <router-view v-slot="{ Component, route }">
+      <transition appear name="fade-transform" mode="out-in">
+        <keep-alive :include="keepAliveStore.keepAliveName">
+          <component :is="Component" :key="route.path" v-if="isRouterShow" />
+        </keep-alive>
+      </transition>
+    </router-view>
+  </el-main>
+  <el-footer v-if="themeConfig.footer">
+    <Footer />
+  </el-footer>
 </template>
 
 <script setup lang="ts">

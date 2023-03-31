@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse, AxiosResponseHeaders } from "axios";
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { showFullScreenLoading, tryHideFullScreenLoading } from "@/config/serviceLoading";
 import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
@@ -7,6 +7,7 @@ import { ElMessage } from "element-plus";
 import { GlobalStore } from "@/stores";
 import { LOGIN_URL } from "@/config/config";
 import router from "@/routers";
+import { StatusCode } from "./helper/statusCode";
 
 const config = {
 	// 默认地址请求地址，可在 .env.*** 文件中修改
@@ -35,8 +36,7 @@ class RequestHttp {
 				// * 如果当前请求不需要显示 loading,在 api 服务中通过指定的第三个参数: { headers: { noLoading: true } }来控制不显示loading，参见loginApi
 				config.headers!.noLoading || showFullScreenLoading();
 				const token = globalStore.token;
-				console.log(config);
-				return { ...config, headers: { ...config.headers, "x-access-token": token } };
+				return { ...config, headers: { ...config.headers, "Authorization": "Bearer " + token } };
 			},
 			(error: AxiosError) => {
 				return Promise.reject(error);
@@ -53,47 +53,42 @@ class RequestHttp {
 				const globalStore = GlobalStore();
 				// * 在请求结束后，并关闭请求 loading
 				tryHideFullScreenLoading();
-				// * 登陆失效（code == 401）
-				if (data.code == ResultEnum.OVERDUE) {
-					ElMessage.error(data.msg);
-					globalStore.setToken("", "");
-					router.replace(LOGIN_URL);
-					return Promise.reject(data);
-				}
-				// * 全局错误信息拦截（防止下载文件得时候返回数据流，没有code，直接报错）
-				if (data.code && data.code !== ResultEnum.SUCCESS) {
-					ElMessage.error(data.msg);
-					return Promise.reject(data);
-				}
-				// * 成功请求（在页面上除非特殊情况，否则不用在页面处理失败逻辑）
 
-				// * 请求刷新token，access_token过期 refresh_token
-				// const {headers} = response
-				// if(headers.toJSON?.valueOf()){
-				// 	console.log("登录过期，开始续约");
-				// }S
-				// console.log(response.headers);
-				// response.headers.get()
-				if (response.headers.has && (response.headers as AxiosResponseHeaders).has("Token-Expired")) {
-					const refreshToken: string = "";
-					let data = new FormData();
-					data.append("refreshToken", refreshToken);
-					const res = await axios({
-						url: "/api/auth/refresh",
-						method: "post",
-						data: data,
-						headers: {
-							Authorization: "Bearer " + refreshToken,
-							"Content-Type": "multipart/form-data"
+				// * 登录Token过期，重新请求刷新Token
+				if (data.code == StatusCode.TokenExpired) {
+					const refreshToken: string = globalStore.refreshToken;
+					if (refreshToken == null || refreshToken.length == 0) {
+						ElMessage.error("登录过期，请重新登录");
+						globalStore.setToken("", "");
+						router.replace(LOGIN_URL);
+						return Promise.reject(data);
+					} else {
+						let formData: FormData = new FormData();
+						formData.append("refreshToken", refreshToken);
+						const res = await axios({
+							url: config.baseURL + "/auth/refresh",
+							method: "post",
+							data: formData,
+							headers: {
+								Authorization: "Bearer " + refreshToken,
+								"Content-Type": "multipart/form-data"
+							}
+						});
+						const { data } = res;
+						if (res && res.status == 200 && data && data.code == 200) {
+							globalStore.setToken(data.data.newAccess, data.data.newRefresh);
+							return this.service.request(response.config);
+						} else {
+							ElMessage.error("登录过期，请重新登录");
+							globalStore.setToken("", "");
+							router.replace(LOGIN_URL);
+							return Promise.reject(data.msg);
 						}
-					});
-					if (res && res.data?.code === 200) {
-						globalStore.setToken(res.data.accessToken, res.data.refreshToken);
 					}
 				}
-
 				return data;
-			},
+			}
+			,
 			async (error: AxiosError) => {
 				const { response } = error;
 				tryHideFullScreenLoading();

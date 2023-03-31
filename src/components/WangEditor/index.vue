@@ -1,16 +1,16 @@
 <template>
-	<div :class="['editor-box', disabled ? 'editor-disabled' : '']">
-		<Toolbar class="editor-toolbar" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" v-if="!hideToolBar" />
-		<Editor
-			:style="{ height }"
-			class="editor-content'"
-			v-model="valueHtml"
-			:defaultConfig="editorConfig"
-			:mode="mode"
-			@on-created="handleCreated"
-			@on-blur="handleBlur"
-		/>
-	</div>
+  <div :class="['editor-box', disabled ? 'editor-disabled' : '']">
+    <Toolbar class="editor-toolbar" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" v-if="!hideToolBar" />
+    <Editor
+      :style="{ height }"
+      class="editor-content'"
+      v-model="valueHtml"
+      :defaultConfig="editorConfig"
+      :mode="mode"
+      @on-created="handleCreated"
+      @on-blur="handleBlur"
+    />
+  </div>
 </template>
 
 <script setup lang="ts" name="WangEditor">

@@ -1,35 +1,35 @@
 <template>
-	<div class="card filter">
-		<h4 class="title sle" v-if="title">{{ title }}</h4>
-		<el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
-		<el-scrollbar :style="{ height: title ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
-			<el-tree
-				ref="treeRef"
-				default-expand-all
-				:node-key="id"
-				:data="multiple ? treeData : treeAllData"
-				:show-checkbox="multiple"
-				:check-strictly="false"
-				:current-node-key="!multiple ? selected : ''"
-				:highlight-current="!multiple"
-				:expand-on-click-node="false"
-				:check-on-click-node="multiple"
-				:props="defaultProps"
-				:filter-node-method="filterNode"
-				:default-checked-keys="multiple ? selected : []"
-				@node-click="handleNodeClick"
-				@check="handleCheckChange"
-			>
-				<template #default="scope">
-					<span class="el-tree-node__label">
-						<slot :row="scope">
-							{{ scope.node.label }}
-						</slot>
-					</span>
-				</template>
-			</el-tree>
-		</el-scrollbar>
-	</div>
+  <div class="card filter">
+    <h4 class="title sle" v-if="title">{{ title }}</h4>
+    <el-input v-model="filterText" placeholder="输入关键字进行过滤" clearable />
+    <el-scrollbar :style="{ height: title ? `calc(100% - 95px)` : `calc(100% - 56px)` }">
+      <el-tree
+        ref="treeRef"
+        default-expand-all
+        :node-key="id"
+        :data="multiple ? treeData : treeAllData"
+        :show-checkbox="multiple"
+        :check-strictly="false"
+        :current-node-key="!multiple ? selected : ''"
+        :highlight-current="!multiple"
+        :expand-on-click-node="false"
+        :check-on-click-node="multiple"
+        :props="defaultProps"
+        :filter-node-method="filterNode"
+        :default-checked-keys="multiple ? selected : []"
+        @node-click="handleNodeClick"
+        @check="handleCheckChange"
+      >
+        <template #default="scope">
+          <span class="el-tree-node__label">
+            <slot :row="scope">
+              {{ scope.node.label }}
+            </slot>
+          </span>
+        </template>
+      </el-tree>
+    </el-scrollbar>
+  </div>
 </template>
 
 <script setup lang="ts" name="TreeFilter">

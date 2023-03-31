@@ -1,31 +1,31 @@
 <template>
-	<component
-		v-if="column.search?.el"
-		:is="`el-${column.search.el}`"
-		v-bind="handleSearchProps"
-		v-model.trim="searchParam[column.search.key ?? handleProp(column.prop!)]"
-		:data="column.search?.el === 'tree-select' ? columnEnum : []"
-		:options="['cascader', 'select-v2'].includes(column.search?.el) ? columnEnum : []"
-		:placeholder="placeholder"
-		:clearable="clearable"
-		range-separator="至"
-		start-placeholder="开始时间"
-		end-placeholder="结束时间"
-	>
-		<template #default="{ data }" v-if="column.search.el === 'cascader'">
-			<span>{{ data[fieldNames.label] }}</span>
-		</template>
-		<template v-if="column.search.el === 'select'">
-			<component
-				:is="`el-option`"
-				v-for="(col, index) in columnEnum"
-				:key="index"
-				:label="col[fieldNames.label]"
-				:value="col[fieldNames.value]"
-			></component>
-		</template>
-		<slot v-else></slot>
-	</component>
+  <component
+    v-if="column.search?.el"
+    :is="`el-${column.search.el}`"
+    v-bind="handleSearchProps"
+    v-model.trim="searchParam[column.search.key ?? handleProp(column.prop!)]"
+    :data="column.search?.el === 'tree-select' ? columnEnum : []"
+    :options="['cascader', 'select-v2'].includes(column.search?.el) ? columnEnum : []"
+    :placeholder="placeholder"
+    :clearable="clearable"
+    range-separator="至"
+    start-placeholder="开始时间"
+    end-placeholder="结束时间"
+  >
+    <template #default="{ data }" v-if="column.search.el === 'cascader'">
+      <span>{{ data[fieldNames.label] }}</span>
+    </template>
+    <template v-if="column.search.el === 'select'">
+      <component
+        :is="`el-option`"
+        v-for="(col, index) in columnEnum"
+        :key="index"
+        :label="col[fieldNames.label]"
+        :value="col[fieldNames.value]"
+      />
+    </template>
+    <slot v-else />
+  </component>
 </template>
 
 <script setup lang="ts" name="SearchFormItem">

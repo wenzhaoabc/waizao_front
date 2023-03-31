@@ -1,32 +1,32 @@
 <template>
-	<el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
-		<el-form-item prop="username">
-			<el-input v-model="loginForm.username" placeholder="手机号 : 15294773148/19876543210">
-				<template #prefix>
-					<el-icon class="el-input__icon"><user /></el-icon>
-				</template>
-			</el-input>
-		</el-form-item>
-		<el-form-item prop="password">
-			<el-input
-				type="password"
-				v-model="loginForm.password"
-				placeholder="密码 : 123ABCabc"
-				show-password
-				autocomplete="new-password"
-			>
-				<template #prefix>
-					<el-icon class="el-input__icon"><lock /></el-icon>
-				</template>
-			</el-input>
-		</el-form-item>
-	</el-form>
-	<div class="login-btn">
-		<el-button :icon="CircleClose" round @click="resetForm(loginFormRef)" size="large">重置</el-button>
-		<el-button :icon="UserFilled" round @click="login(loginFormRef)" size="large" type="primary" :loading="loading">
-			登录
-		</el-button>
-	</div>
+  <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
+    <el-form-item prop="username">
+      <el-input v-model="loginForm.username" placeholder="手机号 : 15294773148/19876543210">
+        <template #prefix>
+          <el-icon class="el-input__icon"><user /></el-icon>
+        </template>
+      </el-input>
+    </el-form-item>
+    <el-form-item prop="password">
+      <el-input
+        type="password"
+        v-model="loginForm.password"
+        placeholder="密码 : 123ABCabc"
+        show-password
+        autocomplete="new-password"
+      >
+        <template #prefix>
+          <el-icon class="el-input__icon"><lock /></el-icon>
+        </template>
+      </el-input>
+    </el-form-item>
+  </el-form>
+  <div class="login-btn">
+    <el-button :icon="CircleClose" round @click="resetForm(loginFormRef)" size="large">重置</el-button>
+    <el-button :icon="UserFilled" round @click="login(loginFormRef)" size="large" type="primary" :loading="loading">
+      登录
+    </el-button>
+  </div>
 </template>
 
 <script setup lang="ts">

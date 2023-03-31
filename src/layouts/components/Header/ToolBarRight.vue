@@ -1,16 +1,16 @@
 <template>
-	<div class="tool-bar-ri">
-		<div class="header-icon">
-			<AssemblySize id="assemblySize" />
-			<Language id="language" />
-			<SearchMenu id="searchMenu" />
-			<ThemeSetting id="themeSetting" />
-			<Message id="message" />
-			<Fullscreen id="fullscreen" />
-		</div>
-		<span class="username">DaoXiangLI</span>
-		<Avatar />
-	</div>
+  <div class="tool-bar-ri">
+    <div class="header-icon">
+      <AssemblySize id="assemblySize" />
+      <Language id="language" />
+      <SearchMenu id="searchMenu" />
+      <ThemeSetting id="themeSetting" />
+      <Message id="message" />
+      <Fullscreen id="fullscreen" />
+    </div>
+    <span class="username">DaoXiangLI</span>
+    <Avatar />
+  </div>
 </template>
 
 <script setup lang="ts">

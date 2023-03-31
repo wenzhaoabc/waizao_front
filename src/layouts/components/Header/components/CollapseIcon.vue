@@ -1,7 +1,7 @@
 <template>
-	<el-icon class="collapse-icon" @click="collapse">
-		<component :is="themeConfig.isCollapse ? 'expand' : 'fold'"></component>
-	</el-icon>
+  <el-icon class="collapse-icon" @click="collapse">
+    <component :is="themeConfig.isCollapse ? 'expand' : 'fold'" />
+  </el-icon>
 </template>
 
 <script setup lang="ts">

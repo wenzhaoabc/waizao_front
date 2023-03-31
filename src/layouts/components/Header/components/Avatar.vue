@@ -1,26 +1,32 @@
 <template>
-	<el-dropdown trigger="click">
-		<div class="avatar">
-			<img src="@/assets/images/avatar.gif" alt="avatar" />
-		</div>
-		<template #dropdown>
-			<el-dropdown-menu>
-				<el-dropdown-item @click="openDialog('infoRef')">
-					<el-icon><User /></el-icon>{{ $t("header.personalData") }}
-				</el-dropdown-item>
-				<el-dropdown-item @click="openDialog('passwordRef')">
-					<el-icon><Edit /></el-icon>{{ $t("header.changePassword") }}
-				</el-dropdown-item>
-				<el-dropdown-item @click="logout" divided>
-					<el-icon><SwitchButton /></el-icon>{{ $t("header.logout") }}
-				</el-dropdown-item>
-			</el-dropdown-menu>
-		</template>
-	</el-dropdown>
-	<!-- infoDialog -->
-	<InfoDialog ref="infoRef"></InfoDialog>
-	<!-- passwordDialog -->
-	<PasswordDialog ref="passwordRef"></PasswordDialog>
+  <el-dropdown trigger="click">
+    <div class="avatar">
+      <img :src="avatarURL" alt="avatar">
+    </div>
+    <template #dropdown>
+      <el-dropdown-menu>
+        <el-dropdown-item @click="openDialog('infoRef')">
+          <el-icon>
+            <User />
+          </el-icon>{{ $t("header.personalData") }}
+        </el-dropdown-item>
+        <el-dropdown-item @click="openDialog('passwordRef')">
+          <el-icon>
+            <Edit />
+          </el-icon>{{ $t("header.changePassword") }}
+        </el-dropdown-item>
+        <el-dropdown-item @click="logout" divided>
+          <el-icon>
+            <SwitchButton />
+          </el-icon>{{ $t("header.logout") }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+  <!-- infoDialog -->
+  <InfoDialog ref="infoRef" />
+  <!-- passwordDialog -->
+  <PasswordDialog ref="passwordRef" />
 </template>
 
 <script setup lang="ts">
@@ -36,6 +42,9 @@ import PasswordDialog from "./PasswordDialog.vue";
 const router = useRouter();
 const globalStore = GlobalStore();
 
+// 用户头像
+const avatarURL: string = globalStore.userInfo?.avatar ?? "@/assets/images/avatar.gif";
+
 // 退出登录
 const logout = () => {
 	ElMessageBox.confirm("您是否确认退出登录?", "温馨提示", {
@@ -50,6 +59,7 @@ const logout = () => {
 		// 3.重定向到登陆页
 		router.replace(LOGIN_URL);
 		ElMessage.success("退出登录成功！");
+		localStorage.clear();
 	});
 };
 
@@ -72,6 +82,7 @@ const openDialog = (refName: string) => {
 	overflow: hidden;
 	cursor: pointer;
 	border-radius: 50%;
+
 	img {
 		width: 100%;
 		height: 100%;

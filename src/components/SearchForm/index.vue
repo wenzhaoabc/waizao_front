@@ -1,27 +1,27 @@
 <template>
-	<div class="card table-search" v-if="columns.length">
-		<el-form ref="formRef" :model="searchParam">
-			<Grid ref="gridRef" :collapsed="collapsed" :gap="[20, 0]" :cols="searchCol">
-				<GridItem v-for="(item, index) in columns" :key="item.prop" v-bind="getResponsive(item)" :index="index">
-					<el-form-item :label="`${item.label} :`">
-						<SearchFormItem :column="item" :searchParam="searchParam" />
-					</el-form-item>
-				</GridItem>
-				<GridItem suffix>
-					<div class="operation">
-						<el-button type="primary" :icon="Search" @click="search">搜索</el-button>
-						<el-button :icon="Delete" @click="reset">重置</el-button>
-						<el-button v-if="showCollapse" type="primary" link class="search-isOpen" @click="collapsed = !collapsed">
-							{{ collapsed ? "展开" : "合并" }}
-							<el-icon class="el-icon--right">
-								<component :is="collapsed ? ArrowDown : ArrowUp"></component>
-							</el-icon>
-						</el-button>
-					</div>
-				</GridItem>
-			</Grid>
-		</el-form>
-	</div>
+  <div class="card table-search" v-if="columns.length">
+    <el-form ref="formRef" :model="searchParam">
+      <Grid ref="gridRef" :collapsed="collapsed" :gap="[20, 0]" :cols="searchCol">
+        <GridItem v-for="(item, index) in columns" :key="item.prop" v-bind="getResponsive(item)" :index="index">
+          <el-form-item :label="`${item.label} :`">
+            <SearchFormItem :column="item" :searchParam="searchParam" />
+          </el-form-item>
+        </GridItem>
+        <GridItem suffix>
+          <div class="operation">
+            <el-button type="primary" :icon="Search" @click="search">搜索</el-button>
+            <el-button :icon="Delete" @click="reset">重置</el-button>
+            <el-button v-if="showCollapse" type="primary" link class="search-isOpen" @click="collapsed = !collapsed">
+              {{ collapsed ? "展开" : "合并" }}
+              <el-icon class="el-icon--right">
+                <component :is="collapsed ? ArrowDown : ArrowUp" />
+              </el-icon>
+            </el-button>
+          </div>
+        </GridItem>
+      </Grid>
+    </el-form>
+  </div>
 </template>
 <script setup lang="ts" name="SearchForm">
 import { computed, ref } from "vue";

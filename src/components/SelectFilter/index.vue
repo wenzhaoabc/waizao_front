@@ -1,31 +1,31 @@
 <template>
-	<div class="select-filter">
-		<div v-for="item in data" :key="item.key" class="select-filter-item">
-			<div class="select-filter-item-title">
-				<span>{{ item.title }} ：</span>
-			</div>
-			<span v-if="!item.options.length" class="select-filter-notData">暂无数据 ~</span>
-			<el-scrollbar>
-				<ul class="select-filter-list">
-					<li
-						v-for="option in item.options"
-						:key="option.value"
-						:class="{
-							active:
-								option.value === selected[item.key] ||
-								(Array.isArray(selected[item.key]) && selected[item.key].includes(option.value))
-						}"
-						@click="select(item, option)"
-					>
-						<slot :row="option">
-							<el-icon v-if="option.icon"><component :is="option.icon" /></el-icon>
-							<span>{{ option.label }}</span>
-						</slot>
-					</li>
-				</ul>
-			</el-scrollbar>
-		</div>
-	</div>
+  <div class="select-filter">
+    <div v-for="item in data" :key="item.key" class="select-filter-item">
+      <div class="select-filter-item-title">
+        <span>{{ item.title }} ：</span>
+      </div>
+      <span v-if="!item.options.length" class="select-filter-notData">暂无数据 ~</span>
+      <el-scrollbar>
+        <ul class="select-filter-list">
+          <li
+            v-for="option in item.options"
+            :key="option.value"
+            :class="{
+              active:
+                option.value === selected[item.key] ||
+                (Array.isArray(selected[item.key]) && selected[item.key].includes(option.value))
+            }"
+            @click="select(item, option)"
+          >
+            <slot :row="option">
+              <el-icon v-if="option.icon"><component :is="option.icon" /></el-icon>
+              <span>{{ option.label }}</span>
+            </slot>
+          </li>
+        </ul>
+      </el-scrollbar>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts" name="selectFilter">

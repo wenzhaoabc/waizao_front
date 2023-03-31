@@ -8,10 +8,10 @@
 	"stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass", "html"],
 	"files.eol": "\n",
 	"[vue]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "Vue.volar"
 	},
 	"[typescript]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"[json]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"

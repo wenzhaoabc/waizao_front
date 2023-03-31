@@ -1,46 +1,46 @@
 <template>
-	<div class="upload-box">
-		<el-upload
-			action="#"
-			list-type="picture-card"
-			:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
-			v-model:file-list="fileList"
-			:multiple="true"
-			:disabled="self_disabled"
-			:limit="limit"
-			:http-request="handleHttpUpload"
-			:before-upload="beforeUpload"
-			:on-exceed="handleExceed"
-			:on-success="uploadSuccess"
-			:on-error="uploadError"
-			:drag="drag"
-			:accept="fileType.join(',')"
-		>
-			<div class="upload-empty">
-				<slot name="empty">
-					<el-icon><Plus /></el-icon>
-					<!-- <span>请上传图片</span> -->
-				</slot>
-			</div>
-			<template #file="{ file }">
-				<img :src="file.url" class="upload-image" />
-				<div class="upload-handle" @click.stop>
-					<div class="handle-icon" @click="handlePictureCardPreview(file)">
-						<el-icon><ZoomIn /></el-icon>
-						<span>查看</span>
-					</div>
-					<div class="handle-icon" @click="handleRemove(file)" v-if="!self_disabled">
-						<el-icon><Delete /></el-icon>
-						<span>删除</span>
-					</div>
-				</div>
-			</template>
-		</el-upload>
-		<div class="el-upload__tip">
-			<slot name="tip"></slot>
-		</div>
-		<el-image-viewer v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="[viewImageUrl]" />
-	</div>
+  <div class="upload-box">
+    <el-upload
+      action="#"
+      list-type="picture-card"
+      :class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
+      v-model:file-list="fileList"
+      :multiple="true"
+      :disabled="self_disabled"
+      :limit="limit"
+      :http-request="handleHttpUpload"
+      :before-upload="beforeUpload"
+      :on-exceed="handleExceed"
+      :on-success="uploadSuccess"
+      :on-error="uploadError"
+      :drag="drag"
+      :accept="fileType.join(',')"
+    >
+      <div class="upload-empty">
+        <slot name="empty">
+          <el-icon><Plus /></el-icon>
+          <!-- <span>请上传图片</span> -->
+        </slot>
+      </div>
+      <template #file="{ file }">
+        <img :src="file.url" class="upload-image">
+        <div class="upload-handle" @click.stop>
+          <div class="handle-icon" @click="handlePictureCardPreview(file)">
+            <el-icon><ZoomIn /></el-icon>
+            <span>查看</span>
+          </div>
+          <div class="handle-icon" @click="handleRemove(file)" v-if="!self_disabled">
+            <el-icon><Delete /></el-icon>
+            <span>删除</span>
+          </div>
+        </div>
+      </template>
+    </el-upload>
+    <div class="el-upload__tip">
+      <slot name="tip" />
+    </div>
+    <el-image-viewer v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="[viewImageUrl]" />
+  </div>
 </template>
 
 <script setup lang="ts" name="UploadImgs">

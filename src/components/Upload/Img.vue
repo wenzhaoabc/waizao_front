@@ -1,50 +1,50 @@
 <template>
-	<div class="upload-box">
-		<el-upload
-			action="#"
-			:id="uuid"
-			:class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
-			:multiple="false"
-			:disabled="self_disabled"
-			:show-file-list="false"
-			:http-request="handleHttpUpload"
-			:before-upload="beforeUpload"
-			:on-success="uploadSuccess"
-			:on-error="uploadError"
-			:drag="drag"
-			:accept="fileType.join(',')"
-		>
-			<template v-if="imageUrl">
-				<img :src="imageUrl" class="upload-image" />
-				<div class="upload-handle" @click.stop>
-					<div class="handle-icon" @click="editImg" v-if="!self_disabled">
-						<el-icon><Edit /></el-icon>
-						<span>编辑</span>
-					</div>
-					<div class="handle-icon" @click="imgViewVisible = true">
-						<el-icon><ZoomIn /></el-icon>
-						<span>查看</span>
-					</div>
-					<div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
-						<el-icon><Delete /></el-icon>
-						<span>删除</span>
-					</div>
-				</div>
-			</template>
-			<template v-else>
-				<div class="upload-empty">
-					<slot name="empty">
-						<el-icon><Plus /></el-icon>
-						<!-- <span>请上传图片</span> -->
-					</slot>
-				</div>
-			</template>
-		</el-upload>
-		<div class="el-upload__tip">
-			<slot name="tip"></slot>
-		</div>
-		<el-image-viewer v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="[imageUrl]" />
-	</div>
+  <div class="upload-box">
+    <el-upload
+      action="#"
+      :id="uuid"
+      :class="['upload', self_disabled ? 'disabled' : '', drag ? 'no-border' : '']"
+      :multiple="false"
+      :disabled="self_disabled"
+      :show-file-list="false"
+      :http-request="handleHttpUpload"
+      :before-upload="beforeUpload"
+      :on-success="uploadSuccess"
+      :on-error="uploadError"
+      :drag="drag"
+      :accept="fileType.join(',')"
+    >
+      <template v-if="imageUrl">
+        <img :src="imageUrl" class="upload-image">
+        <div class="upload-handle" @click.stop>
+          <div class="handle-icon" @click="editImg" v-if="!self_disabled">
+            <el-icon><Edit /></el-icon>
+            <span>编辑</span>
+          </div>
+          <div class="handle-icon" @click="imgViewVisible = true">
+            <el-icon><ZoomIn /></el-icon>
+            <span>查看</span>
+          </div>
+          <div class="handle-icon" @click="deleteImg" v-if="!self_disabled">
+            <el-icon><Delete /></el-icon>
+            <span>删除</span>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="upload-empty">
+          <slot name="empty">
+            <el-icon><Plus /></el-icon>
+            <!-- <span>请上传图片</span> -->
+          </slot>
+        </div>
+      </template>
+    </el-upload>
+    <div class="el-upload__tip">
+      <slot name="tip" />
+    </div>
+    <el-image-viewer v-if="imgViewVisible" @close="imgViewVisible = false" :url-list="[imageUrl]" />
+  </div>
 </template>
 
 <script setup lang="ts" name="UploadImg">

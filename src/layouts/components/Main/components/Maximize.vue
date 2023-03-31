@@ -1,7 +1,7 @@
 <template>
-	<div class="maximize" @click="exitMaximize">
-		<el-icon><Close /></el-icon>
-	</div>
+  <div class="maximize" @click="exitMaximize">
+    <el-icon><Close /></el-icon>
+  </div>
 </template>
 
 <script setup lang="ts">

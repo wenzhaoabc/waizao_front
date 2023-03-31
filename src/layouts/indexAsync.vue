@@ -1,14 +1,14 @@
 <!-- 💥 这里是异步加载 LayoutComponents -->
 <template>
-	<suspense>
-		<template #default>
-			<component :is="LayoutComponents[themeConfig.layout]" />
-		</template>
-		<template #fallback>
-			<Loading />
-		</template>
-	</suspense>
-	<ThemeDrawer />
+  <suspense>
+    <template #default>
+      <component :is="LayoutComponents[themeConfig.layout]" />
+    </template>
+    <template #fallback>
+      <Loading />
+    </template>
+  </suspense>
+  <ThemeDrawer />
 </template>
 
 <script setup lang="ts" name="layout">
