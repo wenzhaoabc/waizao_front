@@ -28,13 +28,22 @@ jobs:
         npm run lint:eslint
         npm run build:pro
         
-    - name: deploy
-      uses: easingthemes/ssh-deploy@v4.1.8
+    - name: scp-pipeline
+      uses: cross-the-world/scp-pipeline@v1.2.1
       with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_ALI }}
-        REMOTE_HOST: 47.103.223.106
-        REMOTE_USER: root
-        SOURCE: dist/
-        TARGET: /var/www/daoxiangli.com/
+        # ssh remote host
+        host: ${{ secrets.SERVER_PORT }}
+        # ssh remote user
+        user: root
+        # content of ssh private key. ex raw content of ~/.ssh/id_rsa
+        key: ${{ secrets.SSH_PRIVATE_KEY_ALI }}
+        # ssh remote password
+        pass: ${{ secrets.SERVER_PASS }}
+        # connection timeout to remote host
+        # source to copy
+        local: dist/
+        # destination for copy
+        remote: /var/www/daoxiangli.com
+        
         
         
