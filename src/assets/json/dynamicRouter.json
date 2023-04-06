@@ -52,7 +52,7 @@
 					"component": "/userManager/committee/index",
 					"meta": {
 						"icon": "Stamp",
-						"title": "村委会管理",
+						"title": "游客管理",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
@@ -67,7 +67,195 @@
 					"component": "/userManager/designer/index",
 					"meta": {
 						"icon": "Avatar",
-						"title": "设计师",
+						"title": "设计师管理",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				}
+			]
+		},
+		{
+			"path": "/contentReview",
+			"name": "contentReview",
+			"redirect": "/contentReview/content",
+			"meta": {
+				"icon": "Tools",
+				"title": "内容审核",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true,
+				"roles": ["admin"]
+			},
+			"children": [
+				{
+					"path": "/contentReview/content",
+					"name": "content",
+					"component": "/contentReview/content/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "审核内容",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/contentReview/sensitive",
+					"name": "sensitive",
+					"component": "/contentReview/sensitive/index",
+					"meta": {
+						"icon": "Stamp",
+						"title": "敏感词检索",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				}
+			]
+		},
+		{
+			"path": "/toolManager",
+			"name": "toolManager",
+			"redirect": "/toolManager/news",
+			"meta": {
+				"icon": "Tools",
+				"title": "工具管理",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true,
+				"roles": ["admin"]
+			},
+			"children": [
+				{
+					"path": "/toolManager/news",
+					"name": "news",
+					"component": "/toolManager/news/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "新闻管理",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/toolManager/notice",
+					"name": "notice",
+					"component": "/toolManager/notice/index",
+					"meta": {
+						"icon": "Stamp",
+						"title": "公告管理",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				}
+			]
+		},
+		{
+			"path": "/messageManager",
+			"name": "messageManager",
+			"redirect": "/messageManager/villagerMess",
+			"meta": {
+				"icon": "Tools",
+				"title": "消息管理",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true,
+				"roles": ["admin"]
+			},
+			"children": [
+				{
+					"path": "/messageManager/villagerMess",
+					"name": "villagerMess",
+					"component": "/messageManager/villagerMess/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "村民提问",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/messageManager/touristMess",
+					"name": "touristMess",
+					"component": "/messageManager/touristMess/index",
+					"meta": {
+						"icon": "Stamp",
+						"title": "游客提问",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				}
+			]
+		},
+		{
+			"path": "/spaceDesign",
+			"name": "spaceDesign",
+			"redirect": "/spaceDesign/viewDesign",
+			"meta": {
+				"icon": "Tools",
+				"title": "公共空间设计",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true,
+				"roles": ["admin"]
+			},
+			"children": [
+				{
+					"path": "/spaceDesign/viewDesign",
+					"name": "viewDesign",
+					"component": "/spaceDesign/viewDesign/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "查看设计方案",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/spaceDesign/editDesign",
+					"name": "editDesign",
+					"component": "/spaceDesign/editDesign/index",
+					"meta": {
+						"icon": "Stamp",
+						"title": "增添设计点位",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
