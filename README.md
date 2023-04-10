@@ -1,33 +1,28 @@
-# Geeker-Admin
+# DaoXiangLi
 
 ### 介绍 📖
 
-Geeker-Admin 一款基于 Vue3.2、TypeScript、Vite3、Pinia、Element-Plus 开源的后台管理框架，使用目前最新技术栈开发。项目提供强大的 [ProTable](https://juejin.cn/post/7166068828202336263) 组件，在一定程度上节省您的开发效率。另外本项目还封装了一些常用组件、Hooks、指令、动态路由、按钮级别权限控制等功能。
+到乡里后台项目开发，基于Geeker Admin模板,Geeker Admin(https://github.com/HalseySpicy/Geeker-Admin)
 
 ### 在线预览 👀
 
-- Link：https://admin.spicyboy.cn
+- Link：http://daoxaingli.com
 
 ### 代码仓库 ⭐
 
-- Gitee：https://gitee.com/laramie/Geeker-Admin
-- GitHub：https://github.com/HalseySpicy/Geeker-Admin
+- GitHub：https://github.com/wenzhaoabc/waizao_front
 
 ### 项目文档 📚
 
-- 项目更新日志：[CHANGELOG.md](./CHANGELOG.md)
-
-- 项目文档地址（持续更新中）：https://docs.spicyboy.cn
+- Geeker Admin文档地址（持续更新中）：https://docs.spicyboy.cn
 
 ### 安装使用步骤 📔
 
 - **Clone：**
 
 ```text
-# Gitee
-git clone https://gitee.com/laramie/Geeker-Admin.git
 # GitHub
-git clone https://github.com/HalseySpicy/Geeker-Admin.git
+git clone https://github.com/wenzhaoabc/waizao_front.git
 ```
 
 - **Install：**

@@ -1,28 +1,13 @@
 <template>
   <span>待发布</span>
   <div>
-    <el-row
-      :span="4"
-      v-for="item in tabledata1"
-      :key="item.content"
-      :offset="1"
-      style="margin-bottom: 15px"
-    >
-      <el-card
-        :body-style="{
-          padding: '15px',
-          width: '1300px',
-          height: '150px',
-        }"
-        shadow="hover"
-      >
-        <el-descriptions
-          class="margin-top"
-          title="公告内容"
-          :column="3"
-          :size="size"
-          :style="blockMargin"
-        >
+    <el-row :span="4" v-for="item in tabledata1" :key="item.content" :offset="1" style="margin-bottom: 15px">
+      <el-card :body-style="{
+        padding: '15px',
+        width: '1300px',
+        height: '150px',
+      }" shadow="hover">
+        <el-descriptions class="margin-top" title="公告内容" :column="3">
           <template #extra>
             <el-button type="primary">删除</el-button>
             <el-button type="warning">重新编辑</el-button>
@@ -38,28 +23,13 @@
   </div>
   <span>已发布</span>
   <div>
-    <el-row
-      :span="4"
-      v-for="item in tabledata2"
-      :key="item.content"
-      :offset="1"
-      style="margin-bottom: 15px"
-    >
-      <el-card
-        :body-style="{
-          padding: '15px',
-          width: '1300px',
-          height: '150px',
-        }"
-        shadow="hover"
-      >
-        <el-descriptions
-          class="margin-top"
-          title="公告内容"
-          :column="3"
-          :size="size"
-          :style="blockMargin"
-        >
+    <el-row :span="4" v-for="item in tabledata2" :key="item.content" :offset="1" style="margin-bottom: 15px">
+      <el-card :body-style="{
+        padding: '15px',
+        width: '1300px',
+        height: '150px',
+      }" shadow="hover">
+        <el-descriptions class="margin-top" title="公告内容" :column="3">
           <template #extra>
             <el-button type="primary">撤回</el-button>
           </template>

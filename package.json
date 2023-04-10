@@ -1,9 +1,9 @@
 {
-	"name": "geeker-admin",
+	"name": "daoxiangli",
 	"private": true,
-	"version": "0.0.7",
-	"description": "Geeker-Admin后台管理系统",
-	"author": "SpicyBoy <848130454@qq.com>",
+	"version": "0.0.1",
+	"description": "到乡里后台管理系统",
+	"author": "Tongji University",
 	"license": "MIT",
 	"scripts": {
 		"dev": "vite",

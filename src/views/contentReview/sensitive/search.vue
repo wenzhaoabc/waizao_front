@@ -1,27 +1,12 @@
 <template>
   <div>
-    <el-row
-      :span="4"
-      v-for="item in tabledata"
-      :key="item.content"
-      :offset="1"
-      style="margin-bottom: 15px"
-    >
-      <el-card
-        :body-style="{
-          padding: '15px',
-          width: '1300px',
-          height: '150px',
-        }"
-        shadow="hover"
-      >
-        <el-descriptions
-          class="margin-top"
-          title="敏感内容"
-          :column="3"
-          :size="size"
-          :style="blockMargin"
-        >
+    <el-row :span="4" v-for="item in tabledata" :key="item.content" :offset="1" style="margin-bottom: 15px">
+      <el-card :body-style="{
+        padding: '15px',
+        width: '1300px',
+        height: '150px',
+      }" shadow="hover">
+        <el-descriptions class="margin-top" title="敏感内容" :column="3" :size="size" :style="blockMargin">
           <template #extra>
             <el-button type="primary">恢复</el-button>
             <el-button type="warning">删除</el-button>
@@ -51,7 +36,7 @@ const blockMargin = computed(() => {
     small: "24px",
   };
   return {
-    marginTop: marginMap[size.value] || marginMap.default,
+    marginTop: marginMap[(size.value) as keyof typeof marginMap] || marginMap.default,
   };
 });
 const tabledata: contentDetail[] = [
@@ -86,10 +71,12 @@ const tabledata: contentDetail[] = [
 .el-descriptions {
   margin-top: 20px;
 }
+
 .cell-item {
   display: flex;
   align-items: center;
 }
+
 .margin-top {
   margin-top: 0px;
 }
