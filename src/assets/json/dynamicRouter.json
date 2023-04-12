@@ -60,21 +60,6 @@
 						"isKeepAlive": true,
 						"roles": ["admin"]
 					}
-				},
-				{
-					"path": "/userManager/designer",
-					"name": "designer",
-					"component": "/userManager/designer/index",
-					"meta": {
-						"icon": "Avatar",
-						"title": "设计师管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
 				}
 			]
 		},
@@ -140,6 +125,21 @@
 				"roles": ["admin"]
 			},
 			"children": [
+				{
+					"path": "/toolManager/picture",
+					"name": "picture",
+					"component": "/toolManager/picture/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "小程序首页图片",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
 				{
 					"path": "/toolManager/news",
 					"name": "news",
