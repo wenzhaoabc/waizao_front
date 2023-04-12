@@ -48,48 +48,32 @@ export namespace Login {
 
 // * 用户管理模块
 export namespace User {
-	export interface ReqUserParams extends ReqPage {
-		username: string;
-		gender: number;
-		idCard: string;
-		email: string;
-		address: string;
-		createTime: string[];
-		status: number;
-	}
-	export interface ResUserList {
-		id: string;
-		username: string;
-		gender: string;
-		user: {
-			detail: {
-				age: number;
-			};
-		};
-		idCard: string;
-		email: string;
-		address: string;
-		createTime: string;
-		status: number;
+	export interface ResUser {
+		userId: number;
+		phone: string;
+		wechatId: string;
+		password: string;
+		userName: string;
 		avatar: string;
-		children?: ResUserList[];
+		sex: string;
+		birthdate: string;
+		roles: string;
+		setting: string;
+		residence: string;
+		created: string;
 	}
-	export interface ResStatus {
-		userLabel: string;
-		userValue: number;
+	export interface ResVisitor {
+		wechatId: string;
+		nickname: string;
+		loginTime: string;
+		loginAddress: string;
 	}
-	export interface ResGender {
-		genderLabel: string;
-		genderValue: number;
-	}
-	export interface ResDepartment {
-		id: string;
-		name: string;
-		children?: ResDepartment[];
-	}
-	export interface ResRole {
-		id: string;
-		name: string;
-		children?: ResDepartment[];
+}
+
+// * 工具管理模块
+export namespace Tool {
+	export interface ResShowImg {
+		url: string;
+		time: string;
 	}
 }

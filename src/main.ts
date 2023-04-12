@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+
 // reset style sheet
 import "@/styles/reset.scss";
 // CSS common style sheet
@@ -32,7 +33,7 @@ import pinia from "@/stores/index";
 import "virtual:svg-icons-register";
 // errorHandler
 import errorHandler from "@/utils/errorHandler";
-
+  
 const app = createApp(App);
 
 app.config.errorHandler = errorHandler;
