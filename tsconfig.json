@@ -30,7 +30,8 @@
 		// 模块名到基于 baseUrl 的路径映射的列表。
 		"paths": {
 			"@": ["src"],
-			"@/*": ["src/*"]
+			"@/*": ["src/*"],
+			// "file-saver": ["node_modules/file-saver/FileSaver.js"]
 		}
 	},
 	"include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "vite.config.ts"],

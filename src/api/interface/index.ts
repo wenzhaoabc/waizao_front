@@ -76,4 +76,20 @@ export namespace Tool {
 		url: string;
 		time: string;
 	}
+	export interface ResNews{
+		newsId: number;
+		content: string;
+		img: string;
+		link: string;
+		linkType: string;
+		publishTime: string;
+	}
+	export interface ResNotices{
+		noticeId: number;
+		publisher: string;
+		publishTime: string;
+		content: string;
+		state: string;
+		willTime: string;
+	}
 }
