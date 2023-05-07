@@ -112,3 +112,5 @@ Geeker-Admin
 - globalStore()为全局状态，可获取用户名，ID等
 
 - eslint设置可在[eslintrc.js](./eslintrc.js)文件中查看，如果代码出现红色波浪线，可能是不符合eslint规范
+
+- 腾讯地图访问IP限制，目前仅校园网111.187.36.6可正常访问

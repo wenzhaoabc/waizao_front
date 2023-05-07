@@ -34,7 +34,7 @@ export const hasPermission = (route: any, roles: Array<string>) => {
 };
 
 export const filterAsyncRoutes = (routes: Array<any>, roles: Array<string>) => {
-	console.log("routes = ", routes, "roles = ", roles);
+	// console.log("routes = ", routes, "roles = ", roles);
 	const res: Array<any> = [];
 	routes.forEach(route => {
 		const temp = { ...route };

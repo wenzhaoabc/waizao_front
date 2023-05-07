@@ -222,7 +222,7 @@
 		{
 			"path": "/spaceDesign",
 			"name": "spaceDesign",
-			"redirect": "/spaceDesign/viewDesign",
+			"redirect": "/spaceDesign/communityHome",
 			"meta": {
 				"icon": "Tools",
 				"title": "公共空间设计",
@@ -234,6 +234,21 @@
 				"roles": ["admin"]
 			},
 			"children": [
+				{
+					"path": "/spaceDesign/communityHome",
+					"name": "communityHome",
+					"component": "/spaceDesign/communityHome/index",
+					"meta": {
+						"icon": "House",
+						"title": "社区点位",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": false,
+						"roles": ["admin"]
+					}
+				},
 				{
 					"path": "/spaceDesign/viewDesign",
 					"name": "viewDesign",
