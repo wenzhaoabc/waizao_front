@@ -7,6 +7,7 @@
                 <el-button v-if="!isEditingEdge" type="primary" @click="editCommunityEdge">编辑边界</el-button>
                 <el-button v-else type="success" @click="edgeEditCompleted">完成</el-button>
             </span>
+            <el-button type="primary" @click="addNewSite">添加点位</el-button>
             <el-card v-if="currentSite != null" class="site-info-card">
                 <el-carousel :interval="5000" arrow="always" class="" height="150px">
                     <el-carousel-item v-for="item in currentSite?.images" :key="item.imgId">
@@ -315,6 +316,17 @@ const edgeEditCompleted = async () => {
         pitch: 43.5,  //设置俯仰角
         rotation: 45 // 旋转角度
     })
+}
+
+/**
+ * 添加新的点位
+ */
+const addNewSite = () => {
+    (dataMap.map as any).on("rightclick", handleMapRightClick)
+}
+
+const handleMapRightClick = (evt: any) => {
+    console.log("右键单击", evt);
 }
 
 onMounted(async () => {

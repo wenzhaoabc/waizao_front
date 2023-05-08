@@ -9,28 +9,34 @@ export interface ResultData<T = any> extends Result {
 	data: T;
 }
 
-// * 分页响应参数
-export interface ResPage<T> {
-	list: T[];
-	pageNum: number;
-	pageSize: number;
-	total: number;
-}
+// // * 分页响应参数
+// export interface ResPage<T> {
+// 	list: T[];
+// 	pageNum: number;
+// 	pageSize: number;
+// 	total: number;
+// }
 
-// * 分页请求参数
-export interface ReqPage {
-	pageNum: number;
-	pageSize: number;
-}
+// // * 分页请求参数
+// export interface ReqPage {
+// 	pageNum: number;
+// 	pageSize: number;
+// }
 
-// * 文件上传模块
+// * 文件上传模块 - zst
 export namespace Upload {
 	export interface ResFileUrl {
+		fileName: string,
 		fileUrl: string;
+		success: boolean
+	}
+	export interface ResDelFile {
+		fileUrl: string;
+		success: boolean
 	}
 }
 
-// * 登录模块
+// * 登录模块 -zst
 export namespace Login {
 	export interface ReqLoginForm {
 		username: string;
@@ -46,7 +52,7 @@ export namespace Login {
 	}
 }
 
-// * 地理几何数据
+// * 地理几何数据 -zst
 export namespace Geometry {
 	export interface Polygon {
 		type: string,
@@ -54,7 +60,7 @@ export namespace Geometry {
 	}
 }
 
-// * 社区点位模块
+// * 社区点位模块 - zst
 export namespace Site {
 	export interface SiteImg {
 		imgId: number,
@@ -87,7 +93,7 @@ export namespace Site {
 	}
 }
 
-// * 用户管理模块
+// * 用户管理模块 - zst
 export namespace User {
 	export interface ResUser {
 		userId: number;
