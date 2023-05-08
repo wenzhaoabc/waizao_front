@@ -1,6 +1,6 @@
 // * 请求响应参数(不包含data)
 export interface Result {
-	code: string;
+	code: number;
 	msg: string;
 }
 
@@ -9,28 +9,34 @@ export interface ResultData<T = any> extends Result {
 	data: T;
 }
 
-// * 分页响应参数
-export interface ResPage<T> {
-	list: T[];
-	pageNum: number;
-	pageSize: number;
-	total: number;
-}
+// // * 分页响应参数
+// export interface ResPage<T> {
+// 	list: T[];
+// 	pageNum: number;
+// 	pageSize: number;
+// 	total: number;
+// }
 
-// * 分页请求参数
-export interface ReqPage {
-	pageNum: number;
-	pageSize: number;
-}
+// // * 分页请求参数
+// export interface ReqPage {
+// 	pageNum: number;
+// 	pageSize: number;
+// }
 
-// * 文件上传模块
+// * 文件上传模块 - zst
 export namespace Upload {
 	export interface ResFileUrl {
+		fileName: string,
 		fileUrl: string;
+		success: boolean
+	}
+	export interface ResDelFile {
+		fileUrl: string;
+		success: boolean
 	}
 }
 
-// * 登录模块
+// * 登录模块 -zst
 export namespace Login {
 	export interface ReqLoginForm {
 		username: string;
@@ -46,7 +52,48 @@ export namespace Login {
 	}
 }
 
-// * 用户管理模块
+// * 地理几何数据 -zst
+export namespace Geometry {
+	export interface Polygon {
+		type: string,
+		coordinates: number[][][]
+	}
+}
+
+// * 社区点位模块 - zst
+export namespace Site {
+	export interface SiteImg {
+		imgId: number,
+		siteId: number,
+		imgPath: string,
+		imgDesc: string,
+		createTime: Date | string
+	}
+	export interface SiteInfo {
+		siteId: number,
+		siteLongitude: number,
+		siteLatitude: number,
+		title: string,
+		detail: string,
+		communityId: number,
+		createTime: Date | string,
+		images: SiteImg[]
+	}
+	export interface CommunityInfo {
+		id: number,
+		position: string,
+		area: Geometry.Polygon,
+		name: string,
+		introduction: string,
+		createTime: Date | string
+	}
+	export interface ReqCommuEdge {
+		communityId: number,
+		area: Geometry.Polygon
+	}
+}
+
+// * 用户管理模块 - zst
 export namespace User {
 	export interface ResUser {
 		userId: number;
@@ -76,7 +123,7 @@ export namespace Tool {
 		url: string;
 		time: string;
 	}
-	export interface ResNews{
+	export interface ResNews {
 		newsId: number;
 		content: string;
 		img: string;
@@ -84,7 +131,7 @@ export namespace Tool {
 		linkType: string;
 		publishTime: string;
 	}
-	export interface ResNotices{
+	export interface ResNotices {
 		noticeId: number;
 		publisher: string;
 		publishTime: string;
