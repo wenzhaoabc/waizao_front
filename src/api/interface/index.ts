@@ -75,6 +75,7 @@ export namespace Site {
 		siteLatitude: number,
 		title: string,
 		detail: string,
+		panorama?: string,
 		communityId: number,
 		createTime: Date | string,
 		images: SiteImg[]
@@ -97,6 +98,7 @@ export namespace Site {
 export namespace User {
 	export interface ResUser {
 		userId: number;
+		citizenId: string;
 		phone: string;
 		wechatId: string;
 		password: string;
