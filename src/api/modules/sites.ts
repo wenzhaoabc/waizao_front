@@ -27,3 +27,21 @@ export const updateCommunityEdge = (params: Site.ReqCommuEdge) => {
     const area = JSON.stringify(params.area);
     return http.post<boolean>(PORT3 + `/community/change-area`, { ...params, area }, { headers: { noLoading: true } });
 }
+
+/**
+ * 添加点位
+ * @param params 点位信息
+ * @returns 
+ */
+export const addNewSiteApi = (params: Site.ReqAddSite) => {
+    return http.post<Site.SiteInfo>(PORT3 + `/site/add-site`, params, {});
+}
+
+/**
+ * 添加点位图片
+ * @param params 点位图片信息
+ * @returns 
+ */
+export const addSiteImageApi = (params: Site.ReqSiteImg) => {
+    return http.post<Site.SiteImg>(PORT3 + `/site/add-img`, params, {});
+}

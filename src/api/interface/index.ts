@@ -92,6 +92,20 @@ export namespace Site {
 		communityId: number,
 		area: Geometry.Polygon
 	}
+	export interface ReqAddSite {
+		siteLongitude: number,
+		siteLatitude: number,
+		title: string,
+		detail: string,
+		panorama?: string,
+		communityId: number,
+		createTime?: Date | string,
+	}
+	export interface ReqSiteImg {
+		siteId: number,
+		imgPath: string,
+		imgDesc: string,
+	}
 }
 
 // * 用户管理模块 - zst

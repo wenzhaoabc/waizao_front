@@ -220,9 +220,9 @@
 			]
 		},
 		{
-			"path": "/spaceDesign",
-			"name": "spaceDesign",
-			"redirect": "/spaceDesign/communityHome",
+			"path": "/space-design",
+			"name": "space-design",
+			"redirect": "/space-design/community-home",
 			"meta": {
 				"icon": "Tools",
 				"title": "公共空间设计",
@@ -235,8 +235,8 @@
 			},
 			"children": [
 				{
-					"path": "/spaceDesign/communityHome",
-					"name": "communityHome",
+					"path": "/space-design/community-home",
+					"name": "community-home",
 					"component": "/spaceDesign/communityHome/index",
 					"meta": {
 						"icon": "House",
@@ -247,10 +247,28 @@
 						"isAffix": false,
 						"isKeepAlive": false,
 						"roles": ["admin"]
-					}
+					},
+					"children":[
+						{
+							"path": "/space-design/community-home/panorama",
+							"name": "sitePanorama",
+							"component": "/spaceDesign/communityHome/panorama",
+							"meta": {
+							  "icon": "Menu",
+							  "title": "点位全景",
+							  "activeMenu": "/space-design/community-home",
+							  "isLink": "",
+							  "isHide": true,
+							  "isFull": false,
+							  "isAffix": false,
+							  "isKeepAlive": true,
+							  "roles": ["admin","user"]
+							}
+						  }
+					]
 				},
 				{
-					"path": "/spaceDesign/viewDesign",
+					"path": "/space-design/viewDesign",
 					"name": "viewDesign",
 					"component": "/spaceDesign/viewDesign/index",
 					"meta": {
@@ -265,7 +283,7 @@
 					}
 				},
 				{
-					"path": "/spaceDesign/editDesign",
+					"path": "/space-design/editDesign",
 					"name": "editDesign",
 					"component": "/spaceDesign/editDesign/index",
 					"meta": {
