@@ -2,21 +2,28 @@
     <div class="card component-root">
         <div id="t-map-container"></div>
         <div class="site-info">
-            <el-button v-if="!communityInfo?.area" type="primary" @click="drawCommunityEdge">绘制边界</el-button>
-            <span v-else>
-                <el-button v-if="!isEditingEdge" type="primary" @click="editCommunityEdge">编辑边界</el-button>
-                <el-button v-else type="success" @click="edgeEditCompleted">完成</el-button>
-            </span>
-            <el-button type="primary" @click="addNewSite">添加点位</el-button>
+            <el-space>
+                <el-button v-if="!communityInfo?.area" type="primary" @click="drawCommunityEdge">绘制边界</el-button>
+                <span v-else>
+                    <el-button v-if="!isEditingEdge" type="primary" @click="editCommunityEdge">编辑边界</el-button>
+                    <el-button v-else type="success" @click="edgeEditCompleted">完成</el-button>
+                </span>
+                <el-button type="primary" @click="addNewSite">添加点位</el-button>
+            </el-space>
             <el-card v-if="currentSite != null" class="site-info-card">
-                <el-carousel :interval="5000" arrow="always" class="" height="150px">
+                <el-carousel :interval="2000" arrow="always" class="" height="150px">
                     <el-carousel-item v-for="item in currentSite?.images" :key="item.imgId">
                         <el-image :src="item.imgPath" fit="fill" :preview-src-list="[item.imgPath]" />
                     </el-carousel-item>
                 </el-carousel>
-                <h3>{{ currentSite?.title }}</h3>
-                <p class="site-info-community">{{ communityInfo?.name }} : <span>{{ currentSite?.createTime }}</span></p>
-                <p>{{ currentSite?.detail }}</p>
+                <div>
+                    <el-button style="float: right;" size="small" @click="handleShowPanorama">全景图</el-button>
+                    <h3>{{ currentSite?.title }}</h3>
+                    <p class="site-info-community">
+                        {{ communityInfo?.name }} : <span>{{ currentSite?.createTime }}</span>
+                    </p>
+                    <p>{{ currentSite?.detail }}</p>
+                </div>
             </el-card>
         </div>
         <div class="toolControl" v-if="currentGeometryId.length > 0">
@@ -40,15 +47,59 @@
                 <SvgIcon name="map-location-fill" :icon-style="mapControllerStyle" @click="gotoOriginCenter" />
             </div>
         </div>
+        <!-- 添加点位 -->
+        <div v-if="isAddingSite" class="add-site-alert-div">
+            <el-alert class="add-site-alert-alert" title="右键选择位置" show-icon center type="info"
+                @close="handleCloseAddSiteAlert" />
+        </div>
+        <el-dialog v-model="addSiteDialog" :open-delay="1000" :draggable="true" title="添加点位">
+            <el-form label-position="top" :model="newSiteInfo" size="small">
+                <el-form-item label="主题">
+                    <el-input v-model="newSiteInfo.title"></el-input>
+                </el-form-item>
+                <el-form-item label="详情">
+                    <el-input v-model="newSiteInfo.detail" type="textarea"></el-input>
+                </el-form-item>
+                <el-form-item label="位置">
+                    <el-input :placeholder="`${newSiteInfo.siteLatitude},${newSiteInfo.siteLongitude}`" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="全景图">
+                    <UploadImg v-model:imageUrl="newSiteInfo.panorama" :fileSize="10" height="100px" width="100px">
+                        <template #tip> 上传全景图片最大为 10M </template>
+                    </UploadImg>
+                </el-form-item>
+                <el-form-item label="描述图片">
+                    <UploadImgs v-model:fileList="newSiteImages" height="100px" width="100px" border-radius="5%">
+                        <template #empty>
+                            <el-icon>
+                                <Picture />
+                            </el-icon>
+                            <span>请上传照片</span>
+                        </template>
+                        <template #tip> 照片大小不能超过 5M </template>
+                    </UploadImgs>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button type="primary" @click="handleAddNewSite">
+                        添加
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts" name="communityHome">
-import { getCommunitySites, getCommunityInfo, updateCommunityEdge } from '@/api/modules/sites';
-import { onMounted, ref, reactive, CSSProperties, computed } from 'vue';
+import { getCommunitySites, getCommunityInfo, updateCommunityEdge, addNewSiteApi, addSiteImageApi } from '@/api/modules/sites';
+import { onMounted, ref, reactive, CSSProperties } from 'vue';
 import SvgIcon from "@/components/SvgIcon/index.vue";
+import UploadImg from "@/components/Upload/Img.vue";
+import UploadImgs from "@/components/Upload/Imgs.vue";
 import { Site } from "@/api/interface/index";
 import { ElMessage } from 'element-plus';
+import { useRouter } from 'vue-router';
 const mapControllerStyle = {
     width: "24px",
     height: "24px",
@@ -321,12 +372,87 @@ const edgeEditCompleted = async () => {
 /**
  * 添加新的点位
  */
+
+const isAddingSite = ref<boolean>(false)
+const newSiteInfo = reactive({
+    siteLongitude: 0,
+    siteLatitude: 0,
+    title: "",
+    detail: "",
+    panorama: "",
+});
+const newSiteImages = ref<any[]>();
 const addNewSite = () => {
+    isAddingSite.value = true;
     (dataMap.map as any).on("rightclick", handleMapRightClick)
 }
 
+const addSiteDialog = ref<boolean>(false);
 const handleMapRightClick = (evt: any) => {
     console.log("右键单击", evt);
+    if (isAddingSite.value == true) {
+        addSiteDialog.value = true;
+        newSiteInfo.siteLatitude = evt.latLng.lat
+        newSiteInfo.siteLongitude = evt.latLng.lng
+
+        let newMarkerLayer = new TMap.MultiMarker({
+            map: dataMap.map,  //指定地图容器
+            geometries: [{
+                "id": "1",   //点标记唯一标识，后续如果有删除、修改位置等操作，都需要此id
+                "position": new TMap.LatLng(newSiteInfo.siteLatitude, newSiteInfo.siteLongitude),  //点标记坐标位置
+                "content": "新点位",
+            }]
+        });
+    }
+}
+
+const handleCloseAddSiteAlert = (event: any) => {
+    (dataMap.map as any).off("rightclick", handleMapRightClick)
+    isAddingSite.value = false;
+    console.log(event);
+}
+
+const handleAddNewSite = async () => {
+    console.log("全景图URL", newSiteInfo.panorama);
+    console.log("添加的图片", newSiteImages.value);
+    if (newSiteInfo.title == "" || newSiteInfo.detail == "") {
+        ElMessage({ message: "内容不可为空", type: "warning" })
+        return;
+    }
+    if (newSiteImages.value?.length == 0) {
+        ElMessage({ message: "请至少上传一张图片", type: "warning" })
+        return;
+    }
+    const { data: addedSite } = await addNewSiteApi({
+        ...newSiteInfo, communityId: communityInfo.value!.id
+    });
+    const siteImg = newSiteImages.value?.map(i => {
+        return {
+            siteId: addedSite.siteId,
+            imgPath: i.url,
+            imgDesc: i.name
+        }
+    })
+    siteImg?.forEach(async i => {
+        await addSiteImageApi(i);
+    })
+    ElMessage({ message: "添加成功", type: "success" });
+    isAddingSite.value = false;
+    addSiteDialog.value = false;
+}
+
+/**
+ * 展示全景图
+ */
+const router = useRouter();
+const handleShowPanorama = () => {
+    console.log(currentSite.value);
+    const { panorama } = (currentSite.value)!;
+    if (panorama == undefined || panorama == "") {
+        ElMessage({ message: "暂无全景图", type: "error" })
+        return;
+    }
+    router.push({ path: `/space-design/community-home/panorama`, query: { url: panorama } })
 }
 
 onMounted(async () => {
@@ -427,5 +553,18 @@ onMounted(async () => {
 
 .origin-cenetr-contoller {
     margin: 20px 30px 30px auto;
+}
+
+.add-site-alert-div {
+    position: absolute;
+    top: 25px;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+}
+
+.add-site-alert-alert {
+    margin: 0 auto;
+    width: 200px;
 }
 </style>

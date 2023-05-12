@@ -220,9 +220,9 @@
 			]
 		},
 		{
-			"path": "/spaceDesign",
+			"path": "/space-design",
 			"name": "spaceDesign",
-			"redirect": "/spaceDesign/communityHome",
+			"redirect": "/space-design/community-home",
 			"meta": {
 				"icon": "Tools",
 				"title": "公共空间设计",
@@ -235,7 +235,7 @@
 			},
 			"children": [
 				{
-					"path": "/spaceDesign/communityHome",
+					"path": "/space-design/community-home",
 					"name": "communityHome",
 					"component": "/spaceDesign/communityHome/index",
 					"meta": {
@@ -247,10 +247,43 @@
 						"isAffix": false,
 						"isKeepAlive": false,
 						"roles": ["admin"]
+					},
+					"children":[
+						{
+							"path": "/space-design/community-home/panorama",
+							"name": "sitePanorama",
+							"component": "/spaceDesign/communityHome/panorama",
+							"meta": {
+							  "icon": "Menu",
+							  "title": "点位全景",
+							  "activeMenu": "/space-design/community-home",
+							  "isLink": "",
+							  "isHide": true,
+							  "isFull": false,
+							  "isAffix": false,
+							  "isKeepAlive": true,
+							  "roles": ["admin","user"]
+							}
+						  }
+					]
+				},
+				{
+					"path": "/space-design/site-feedback",
+					"name": "siteFeedback",
+					"component": "/spaceDesign/siteFeedback/index",
+					"meta": {
+						"icon": "Message",
+						"title": "点位反馈",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
 					}
 				},
 				{
-					"path": "/spaceDesign/viewDesign",
+					"path": "/space-design/viewDesign",
 					"name": "viewDesign",
 					"component": "/spaceDesign/viewDesign/index",
 					"meta": {
@@ -265,286 +298,12 @@
 					}
 				},
 				{
-					"path": "/spaceDesign/editDesign",
+					"path": "/space-design/editDesign",
 					"name": "editDesign",
 					"component": "/spaceDesign/editDesign/index",
 					"meta": {
 						"icon": "Stamp",
 						"title": "增添设计点位",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				}
-			]
-		},
-		{
-			"path": "/assembly",
-			"name": "assembly",
-			"redirect": "/assembly/guide",
-			"meta": {
-				"icon": "Briefcase",
-				"title": "常用组件",
-				"isLink": "",
-				"isHide": false,
-				"isFull": false,
-				"isAffix": false,
-				"isKeepAlive": true,
-				"roles": ["user", "admin"]
-			},
-			"children": [
-				{
-					"path": "/assembly/guide",
-					"name": "guide",
-					"component": "/assembly/guide/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "引导页",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/selectIcon",
-					"name": "selectIcon",
-					"component": "/assembly/selectIcon/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "图标选择器",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/selectFilter",
-					"name": "selectFilter",
-					"component": "/assembly/selectFilter/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "分类筛选器",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/treeFilter",
-					"name": "treeFilter",
-					"component": "/assembly/treeFilter/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "树形筛选器",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/svgIcon",
-					"name": "svgIcon",
-					"component": "/assembly/svgIcon/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "SVG 图标",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/uploadFile",
-					"name": "uploadFile",
-					"component": "/assembly/uploadFile/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "文件上传",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/batchImport",
-					"name": "batchImport",
-					"component": "/assembly/batchImport/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "批量添加数据",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/wangEditor",
-					"name": "wangEditor",
-					"component": "/assembly/wangEditor/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "富文本编辑器",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				},
-				{
-					"path": "/assembly/draggable",
-					"name": "draggable",
-					"component": "/assembly/draggable/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "拖拽组件",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["user", "admin"]
-					}
-				}
-			]
-		},
-		{
-			"path": "/system",
-			"name": "system",
-			"redirect": "/system/accountManage",
-			"meta": {
-				"icon": "Tools",
-				"title": "系统管理",
-				"isLink": "",
-				"isHide": false,
-				"isFull": false,
-				"isAffix": false,
-				"isKeepAlive": true,
-				"roles": ["admin"]
-			},
-			"children": [
-				{
-					"path": "/system/accountManage",
-					"name": "accountManage",
-					"component": "/system/accountManage/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "账号管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/roleManage",
-					"name": "roleManage",
-					"component": "/system/roleManage/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "角色管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/menuMange",
-					"name": "menuMange",
-					"component": "/system/menuMange/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "菜单管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/departmentManage",
-					"name": "departmentManage",
-					"component": "/system/departmentManage/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "部门管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/dictManage",
-					"name": "dictManage",
-					"component": "/system/dictManage/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "字典管理",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/timingTask",
-					"name": "timingTask",
-					"component": "/system/timingTask/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "定时任务",
-						"isLink": "",
-						"isHide": false,
-						"isFull": false,
-						"isAffix": false,
-						"isKeepAlive": true,
-						"roles": ["admin"]
-					}
-				},
-				{
-					"path": "/system/systemLog",
-					"name": "systemLog",
-					"component": "/system/systemLog/index",
-					"meta": {
-						"icon": "Menu",
-						"title": "系统日志",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,

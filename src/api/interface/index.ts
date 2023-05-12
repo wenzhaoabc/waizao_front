@@ -92,10 +92,54 @@ export namespace Site {
 		communityId: number,
 		area: Geometry.Polygon
 	}
+	export interface ReqAddSite {
+		siteLongitude: number,
+		siteLatitude: number,
+		title: string,
+		detail: string,
+		panorama?: string,
+		communityId: number,
+		createTime?: Date | string,
+	}
+	export interface ReqSiteImg {
+		siteId: number,
+		imgPath: string,
+		imgDesc: string,
+	}
+	export interface SiteFeedback {
+		id: number,
+		siteId?: number,
+		userId: number,
+		title: string,
+		content: string,
+		siteLongitude: number,
+		siteLatitude: number,
+		createdTime: string | Date,
+		imgList: string[]
+	}
+	export interface ResResolveFeedback {
+		communityId?: number,
+		siteName: string,
+		feedbackId: number
+	}
 }
 
 // * 用户管理模块 - zst
 export namespace User {
+	export interface UserInfo {
+		userId: number;
+		citizenId: string;
+		phone: string;
+		wechatId?: string;
+		userName?: string;
+		avatar?: string;
+		sex?: string;
+		birthdate?: string;
+		roles?: string;
+		setting?: string;
+		residence?: string;
+		created?: string;
+	}
 	export interface ResUser {
 		userId: number;
 		citizenId: string;
