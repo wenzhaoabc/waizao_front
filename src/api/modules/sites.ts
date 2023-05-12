@@ -45,3 +45,24 @@ export const addNewSiteApi = (params: Site.ReqAddSite) => {
 export const addSiteImageApi = (params: Site.ReqSiteImg) => {
     return http.post<Site.SiteImg>(PORT3 + `/site/add-img`, params, {});
 }
+
+/**
+ * 获取某个社区内的点位反馈信息
+ */
+export const getSiteFeedbackApi = (communityId: number | string) => {
+    return http.get<Site.SiteFeedback[]>(PORT3 + `/site/community-feedback`, { communityId }, { headers: { noLoading: true } });
+}
+
+/**
+ * 获取某一个点位的信息
+ */
+export const getSiteInfoApi = (siteId: number) => {
+    return http.get<Site.SiteInfo>(PORT3 + `/site/get-id`, { id: siteId }, { headers: { noLoading: true } });
+}
+
+/**
+ * 处理点位反馈信息
+ */
+export const resolveSiteFeedbackApi = (parmas: Site.ResResolveFeedback) => {
+    return http.post<boolean>(PORT3 + `/site/resolve-feedback`, parmas, { headers: { noLoading: true } });
+}

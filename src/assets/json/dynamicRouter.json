@@ -221,7 +221,7 @@
 		},
 		{
 			"path": "/space-design",
-			"name": "space-design",
+			"name": "spaceDesign",
 			"redirect": "/space-design/community-home",
 			"meta": {
 				"icon": "Tools",
@@ -236,7 +236,7 @@
 			"children": [
 				{
 					"path": "/space-design/community-home",
-					"name": "community-home",
+					"name": "communityHome",
 					"component": "/spaceDesign/communityHome/index",
 					"meta": {
 						"icon": "House",
@@ -266,6 +266,21 @@
 							}
 						  }
 					]
+				},
+				{
+					"path": "/space-design/site-feedback",
+					"name": "siteFeedback",
+					"component": "/spaceDesign/siteFeedback/index",
+					"meta": {
+						"icon": "Message",
+						"title": "点位反馈",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
 				},
 				{
 					"path": "/space-design/viewDesign",
