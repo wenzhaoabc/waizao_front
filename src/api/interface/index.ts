@@ -124,6 +124,46 @@ export namespace Site {
 	}
 }
 
+// * 点位设计模块 zst
+export namespace Design {
+	export interface Item {
+		itemId: number,
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string
+	}
+	export interface Type {
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string,
+		items: Item[]
+	}
+	export interface ARModel {
+		id: number,
+		name: string,
+		imgPath: string,
+		model: string
+	}
+	export interface ReqAddAR {
+		name: string,
+		imgPath: string,
+		model: string
+	}
+	export interface ReqAddItem {
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string
+	}
+	export interface ReqAddType {
+		name: string,
+		description: string,
+		imgPath: string,
+	}
+}
+
 // * 用户管理模块 - zst
 export namespace User {
 	export interface UserInfo {

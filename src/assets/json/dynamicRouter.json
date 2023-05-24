@@ -283,6 +283,21 @@
 					}
 				},
 				{
+					"path": "/space-design/element",
+					"name": "designElement",
+					"component": "/spaceDesign/elements/index",
+					"meta": {
+						"icon": "CreditCard",
+						"title": "设计元素",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
 					"path": "/space-design/viewDesign",
 					"name": "viewDesign",
 					"component": "/spaceDesign/viewDesign/index",
