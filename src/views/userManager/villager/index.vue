@@ -59,7 +59,6 @@
         </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <el-button type="warning">以EXCEL导入</el-button>
             <el-button @click="dialogFormVisible = false">取消</el-button>
             <el-button type="primary" @click="confirmDialog">
               确认
@@ -110,13 +109,15 @@
           </span>
         </template>
       </el-dialog>
-      <el-button type="warning">导出EXCEL表格</el-button>
-      <el-button type="warning">导出PDF</el-button>
+      <!-- <el-button type="warning"  @click="exportExcel">导出EXCEL表格</el-button>
+      <el-button type="warning">导出PDF</el-button> -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts" name="villager">
+// import XLSX from "xlsx"
+// import * as fileSaver from 'file-saver';
 import { reactive, computed, ref, onMounted } from "vue";
 import { ElMessageBox, ElForm,ElMessage } from "element-plus";
 import { User } from "@/api/interface";
@@ -247,11 +248,14 @@ const getAllUser = async () => {
 };
 const confirmDialog = async () => {
   try {
-    form.userId = 0
-    form.password = "123"
     const dateString = new Date().toLocaleString()
     form.created = dateString
+    if(form.roles.length==0){
+      ElMessage.error('请选择角色')
+      return
+    }
     form.roles = form.roles.join(",");
+    form.birthdate=new Date(+new Date(form.birthdate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').split(' ')[0]
     const { data } = await addUserApi({ ...form });
     console.log(data);
     dialogFormVisible.value = false
@@ -278,7 +282,11 @@ const filterTableData = computed(() =>
 const handleEdit = (index: number, row: User.ResUser) => {
   dialogFormVisible1.value = true
   Object.keys(form1).forEach(key => {
-      form1[key] = row[key];
+      if (key != "roles") {
+          form1[key] = row[key];
+      } else {
+          form1[key] = ""
+      }
     });//赋值
 };
 const handleDelete = async (index: number, row: User.ResUser) => {
@@ -307,6 +315,21 @@ const refreshdata = () => {
   search.value = "1";
   search.value = ""; //此步是为了触发computed
 };
+// const exportExcel = () => {
+//   const sheetData = tableData as any[]
+//   const worksheet = XLSX.utils.json_to_sheet(sheetData)
+//   const workbook = XLSX.utils.book_new()
+//   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
+//   const binaryData = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' })
+//   const blob = new Blob([s2ab(binaryData)], { type: 'application/octet-stream' })
+//   fileSaver.saveAs(blob, 'table.xlsx')
+// }
+// const s2ab = (s: any) => {
+//   const buf = new ArrayBuffer(s.length)
+//   const view = new Uint8Array(buf)
+//   for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
+//   return buf
+// }
 </script>
 
 <style scoped>
