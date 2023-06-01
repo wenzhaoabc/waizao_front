@@ -8,8 +8,8 @@ export const getShowImgsApi = () => {
 };
 
 // 新增图片
-export const addShowImgApi = (params: FormData) => {
-	return http.post<String>(PORT3 + `/toolManage/addShowImg`, params, { headers: { noLoading: true } });
+export const addShowImgApi = (url: string) => {
+	return http.post<String>(PORT3 + `/toolManage/addShowImg?url=${url}`);
 };
 
 // 删除图片

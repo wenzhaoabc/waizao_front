@@ -164,7 +164,7 @@ export namespace Design {
 	}
 }
 
-// * 用户管理模块 - zst
+// * 用户管理模块
 export namespace User {
 	export interface UserInfo {
 		userId: number;
