@@ -77,3 +77,41 @@ export namespace Tool {
 		time: string;
 	}
 }
+
+// * 内容管理模块
+export namespace Content {
+	export interface ResSquare {
+		shareId: number;
+		img: string;
+		content: string;
+		userName: string;
+		userImg: string;
+		isLove: boolean;
+		loveNum: number;
+		place: string;
+		time: string;
+		commentAmount: number;
+		comment: string;
+	}
+}
+
+// * 反馈管理模块
+export namespace Feedback {
+	export interface ResFeedback {
+		feedbackId: number,
+		type: string,
+		content: string,
+		wechatId: string,
+		userType: string,
+		feedbackTime: string,
+		replyContent: string,
+		replyTime: string,
+		replyState: string,
+		replyEr: string
+	}
+	export interface ResReply {
+		feedbackId: number,
+		replyContent: string,
+		replyEr: string
+	}
+}
