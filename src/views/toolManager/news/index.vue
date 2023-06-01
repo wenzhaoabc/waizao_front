@@ -61,15 +61,8 @@
         <el-form-item label="发布日期" :label-width="formLabelWidth">
           <el-date-picker v-model="form.publishTime" type="date" placeholder="请选择发布日期" :label-width="formLabelWidth" />
         </el-form-item>
-        <el-form-item label="要闻图片" :label-width="formLabelWidth">
-          <el-upload
-            ref="upload"
-            action=""
-            :show-file-list="false"
-            :before-upload="beforeUpload"
-            :http-request="uploadImage">
-            <el-button size="large" type="primary">点击上传</el-button>
-          </el-upload>
+        <el-form-item label="图片">
+          <Img v-model:image-url="form.img" height="120px" width="120px"></Img>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -87,7 +80,8 @@
 <script setup lang="ts" name="news">
 import { onMounted, reactive, ref,computed } from "vue";
 import { Tool } from "@/api/interface";
-import { UploadRawFile, UploadFile,ElMessageBox, ElMessage } from "element-plus";
+import { UploadRawFile, UploadFile, ElMessageBox, ElMessage } from "element-plus";
+import Img from '@/components/Upload/Img.vue';
 import {getNewsApi,addNewApi,deleteNewApi,addImgApi} from "@/api/modules/toolManage";
 const dialogFormVisible = ref(false)
 const formLabelWidth = '140px'
@@ -133,35 +127,19 @@ onMounted(async () => {
 });
 const getAllNews = async () => {
   const { data } = await getNewsApi();
-  tabledata.splice(0, tabledata.length, ...data);
+  const modifiedData = data.map(item => {
+    const date = new Date(item.publishTime);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const formattedDate = `${year}-${month}-${day}`;
+    return {
+      ...item,
+      publishTime: formattedDate
+    };
+  });
+  tabledata.splice(0, tabledata.length, ...modifiedData);
   console.log(tabledata);
-};
-const beforeUpload = (file: UploadRawFile) => {
-  const type = ["image/jpeg", "image/jpg", "image/png"];
-  if (type.indexOf(file.type) === -1) {
-    ElMessage.error("上传的文件必须是JPG、JPEG、PNG三种之一!");
-    return false;
-  } else if (file.size / 1024 / 1024 > 2) {
-    ElMessage.error("图片大小不能超过2MB!");
-    return false;
-  }
-  return true;
-};
-const uploadImage = async (val: any) => {
-    const formData = new FormData();
-    formData.append("file", val.file);
-    try {
-        const { data } = await addImgApi(formData);
-        console.log(data);
-        ElMessage({
-            message: "图片上传成功",
-            type: "success",
-        });
-        form.img=data.toString()
-    } catch (error) {
-        ElMessage.error("上传失败");
-    }
-    upload.clearFiles()
 };
 const confirmDialog = async () => {
   try {

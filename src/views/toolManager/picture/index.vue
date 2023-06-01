@@ -6,7 +6,8 @@
         v-for="item in tabledata"
         :key="item.url"
         :offset="1"
-        style="margin-bottom: 15px">
+        style="margin-bottom: 15px"
+      >
         <el-card
           :body-style="{
             padding: '15px',
@@ -14,7 +15,8 @@
             height: '150px',
             display: 'flex',
           }"
-          shadow="hover">
+          shadow="hover"
+        >
           <el-image
             style="width: 400px; height: 150px; flex: 1"
             :src="item.url"
@@ -47,19 +49,21 @@
       </el-row>
     </div>
     <div class="child2">
-      <el-upload
-        ref="upload"
-        :show-file-list="false"
-        :before-upload="beforeUpload"
-        :http-request="uploadImage"
-        :on-exceed="handleExceed"
-        action=""
-        accept=".jpg,.png,.jpeg"
-        :limit="1"
-      >
-        <el-button size="large" type="primary">添加图片</el-button>
-      </el-upload>
+        <el-button size="large" type="primary" @click="isaddPicture = true;">添加图片</el-button>
     </div>
+    <el-dialog v-model="isaddPicture" title="添加图片">
+      <el-form :model="newPicture">
+        <el-form-item label="图片">
+          <Img v-model:image-url="newPicture.imgPath" height="120px" width="120px"></Img>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="isaddPicture = false">取消</el-button>
+          <el-button type="primary" @click="addPicture"> 确认 </el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -67,9 +71,19 @@
 import { Picture as IconPicture } from "@element-plus/icons-vue";
 import { Tool } from "@/api/interface";
 import { onMounted, reactive, ref } from "vue";
+import Img from '@/components/Upload/Img.vue';
 import { ElMessageBox, ElMessage } from "element-plus";
 import type { UploadRawFile, UploadFile, FormInstance, Action } from "element-plus";
-import { getShowImgsApi, addShowImgApi, deleteShowImgApi, } from "@/api/modules/toolManage";
+import {
+  getShowImgsApi,
+  addShowImgApi,
+  deleteShowImgApi,
+} from "@/api/modules/toolManage";
+// 添加图片
+const isaddPicture = ref<boolean>(false)
+const newPicture = reactive({
+    imgPath: ""
+})
 const tabledata = reactive<Tool.ResShowImg[]>([
   {
     url: "https://s2.loli.net/2022/10/01/B94FhqQpkfdoWbi.jpg",
@@ -78,11 +92,24 @@ const tabledata = reactive<Tool.ResShowImg[]>([
   {
     url: "https://s2.loli.net/2022/10/01/NFXyqBG3nhosRft.jpg",
     time: "2022.10.28",
-  }
+  },
 ]);
 onMounted(async () => {
   getAllShowImg();
 });
+const addPicture = async () => {
+    console.log(newPicture)
+    if (newPicture.imgPath.length > 0) {
+        const { data } = await addShowImgApi(newPicture.imgPath);
+        console.log(data)
+        getAllShowImg();
+        ElMessage({ message: "添加成功", type: "success" })
+        isaddPicture.value = false;
+        newPicture.imgPath = ""
+    } else {
+        ElMessage({ message: "上传图片不可为空", type: "error" })
+    }
+}
 const getAllShowImg = async () => {
   const { data } = await getShowImgsApi();
   tabledata.splice(0, tabledata.length, ...data);
@@ -124,25 +151,24 @@ const beforeUpload = (file: UploadRawFile) => {
   }
   return true;
 };
-const upload =ref()
+const upload = ref();
 // 自定义上传函数
 const uploadImage = async (val: any) => {
-    const formData = new FormData();
-    formData.append("file", val.file);
-    try {
-        const { data } = await addShowImgApi(formData);
-        console.log(data);
-        ElMessage({
-            message: "成功",
-            type: "success",
-        });
-    } catch (error) {
-        ElMessage.error("上传失败");
-    }
-  upload.clearFiles()
-  getAllShowImg()
+  const formData = new FormData();
+  formData.append("file", val.file);
+  try {
+    const { data } = await addShowImgApi(formData);
+    console.log(data);
+    ElMessage({
+      message: "成功",
+      type: "success",
+    });
+  } catch (error) {
+    ElMessage.error("上传失败");
+  }
+  upload.clearFiles();
+  getAllShowImg();
 };
-
 </script>
 
 <style scoped>
