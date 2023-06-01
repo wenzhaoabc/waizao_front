@@ -75,6 +75,7 @@ export namespace Site {
 		siteLatitude: number,
 		title: string,
 		detail: string,
+		panorama?: string,
 		communityId: number,
 		createTime: Date | string,
 		images: SiteImg[]
@@ -91,12 +92,97 @@ export namespace Site {
 		communityId: number,
 		area: Geometry.Polygon
 	}
+	export interface ReqAddSite {
+		siteLongitude: number,
+		siteLatitude: number,
+		title: string,
+		detail: string,
+		panorama?: string,
+		communityId: number,
+		createTime?: Date | string,
+	}
+	export interface ReqSiteImg {
+		siteId: number,
+		imgPath: string,
+		imgDesc: string,
+	}
+	export interface SiteFeedback {
+		id: number,
+		siteId?: number,
+		userId: number,
+		title: string,
+		content: string,
+		siteLongitude: number,
+		siteLatitude: number,
+		createdTime: string | Date,
+		imgList: string[]
+	}
+	export interface ResResolveFeedback {
+		communityId?: number,
+		siteName: string,
+		feedbackId: number
+	}
+}
+
+// * 点位设计模块 zst
+export namespace Design {
+	export interface Item {
+		itemId: number,
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string
+	}
+	export interface Type {
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string,
+		items: Item[]
+	}
+	export interface ARModel {
+		id: number,
+		name: string,
+		imgPath: string,
+		model: string
+	}
+	export interface ReqAddAR {
+		name: string,
+		imgPath: string,
+		model: string
+	}
+	export interface ReqAddItem {
+		typeId: number,
+		name: string,
+		description: string,
+		imgPath: string
+	}
+	export interface ReqAddType {
+		name: string,
+		description: string,
+		imgPath: string,
+	}
 }
 
 // * 用户管理模块 - zst
 export namespace User {
+	export interface UserInfo {
+		userId: number;
+		citizenId: string;
+		phone: string;
+		wechatId?: string;
+		userName?: string;
+		avatar?: string;
+		sex?: string;
+		birthdate?: string;
+		roles?: string;
+		setting?: string;
+		residence?: string;
+		created?: string;
+	}
 	export interface ResUser {
 		userId: number;
+		citizenId: string;
 		phone: string;
 		wechatId: string;
 		password: string;
@@ -138,5 +224,43 @@ export namespace Tool {
 		content: string;
 		state: string;
 		willTime: string;
+	}
+}
+
+// * 内容管理模块
+export namespace Content {
+	export interface ResSquare {
+		shareId: number;
+		img: string;
+		content: string;
+		userName: string;
+		userImg: string;
+		isLove: boolean;
+		loveNum: number;
+		place: string;
+		time: string;
+		commentAmount: number;
+		comment: string;
+	}
+}
+
+// * 反馈管理模块
+export namespace Feedback {
+	export interface ResFeedback {
+		feedbackId: number,
+		type: string,
+		content: string,
+		wechatId: string,
+		userType: string,
+		feedbackTime: string,
+		replyContent: string,
+		replyTime: string,
+		replyState: string,
+		replyEr: string
+	}
+	export interface ResReply {
+		feedbackId: number,
+		replyContent: string,
+		replyEr: string
 	}
 }

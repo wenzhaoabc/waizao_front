@@ -1,4 +1,4 @@
-import { Login, ResultData } from "@/api/interface/index";
+import { Login, ResultData, User } from "@/api/interface/index";
 import { PORT3 } from "@/api/config/servicePort";
 import DynamicRouter from "@/assets/json/dynamicRouter.json";
 import AuthButtons from "@/assets/json/authButtons.json";
@@ -57,7 +57,7 @@ export const getAuthMenuListApi = () => {
 		const globalStore = GlobalStore();
 		const accessRoutes = filterAsyncRoutes(DynamicRouter.data, globalStore.userInfo?.roles);
 		console.log("userInfo = ", globalStore.userInfo);
-		resolve({ code: "200", data: accessRoutes, msg: "success" });
+		resolve({ code: 200, data: accessRoutes, msg: "success" });
 		console.log({ accessRoutes });
 	});
 	return DynamicRouter;
@@ -71,6 +71,7 @@ export const logoutApi = () => {
 	return http.post<ResultData>(PORT3 + `/auth/logout`, qs.stringify(params));
 };
 
-export const userInfoApi = () => {
-	return http.get<ResultData>(PORT3 + "/auth/userInfo");
+// * 获取用户个人信息
+export const getUserInfoApi = (userId: number) => {
+	return http.get<User.UserInfo>(PORT3 + "/auth/any-userinfo", { userId: userId }, { headers: { noLoading: true } });
 }
