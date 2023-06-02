@@ -29,6 +29,9 @@
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form.userName" autocomplete="off" clearable />
           </el-form-item>
+          <el-form-item label="身份证号" :label-width="formLabelWidth">
+            <el-input v-model="form.citizenId" autocomplete="off" clearable />
+          </el-form-item>
           <el-form-item label="电话号码" :label-width="formLabelWidth">
             <el-input v-model="form.phone" autocomplete="off" clearable />
           </el-form-item>
@@ -70,6 +73,9 @@
         <el-form :model="form1" :rules="addUserRules">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form1.userName" autocomplete="off" clearable />
+          </el-form-item>
+          <el-form-item label="身份证号" :label-width="formLabelWidth">
+            <el-input v-model="form1.citizenId" autocomplete="off" clearable />
           </el-form-item>
           <el-form-item label="电话号码" :label-width="formLabelWidth">
             <el-input v-model="form1.phone" autocomplete="off" clearable />
@@ -131,6 +137,7 @@ const formLabelWidth = '140px'
 const tableData: User.ResUser[] = [
   {
     userId: 0,
+    citizenId: "123456",
     phone: "123456",
     wechatId: "123",
     password: "123",
@@ -145,6 +152,7 @@ const tableData: User.ResUser[] = [
   },
   {
     userId: 1,
+    citizenId: "123456",
     phone: "123456",
     wechatId: "123",
     password: "123",
@@ -160,6 +168,7 @@ const tableData: User.ResUser[] = [
 ];
 const form = reactive<User.ResUser>({
   userId: 0,
+  citizenId: "",
   phone: "",
   wechatId: "",
   password: "",
@@ -174,6 +183,7 @@ const form = reactive<User.ResUser>({
 })
 const form1 = reactive<User.ResUser>({
   userId: 0,
+  citizenId: "",
   phone: "",
   wechatId: "",
   password: "",
@@ -242,7 +252,7 @@ const updateUser = async () => {
 }
 const getAllUser = async () => {
   const { data } = await getUsersApi();
-  // console.log(data);
+  console.log(data);
   tableData.splice(0, tableData.length, ...data);
   refreshdata();
 };
