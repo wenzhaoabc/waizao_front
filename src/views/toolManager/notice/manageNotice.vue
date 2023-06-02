@@ -90,6 +90,7 @@ import WangEditor from "@/components/WangEditor/index.vue";
 import { reactive, computed, ref, onMounted } from "vue";
 import { ElMessageBox, ElForm,ElMessage } from "element-plus";
 import { Tool } from "@/api/interface";
+import { GlobalStore } from '@/stores';
 import { getFinalNoticeApi,getUnFinalNoticeApi,getNoticeApi,addNoticeApi,deletNoticeApi,updateNoticeApi } from "@/api/modules/toolManage";
 const tabledata1= reactive<Tool.ResNotices[]>( [
   {
@@ -170,6 +171,8 @@ const publishNotice = async (noticeId:number) => {
   const index = tabledata1.findIndex((item) => item.noticeId === noticeId);
   const item = tabledata1[index];
   console.log(item)
+  const globalStore = GlobalStore();
+  console.log(globalStore.userInfo)
   const res = await updateNoticeApi({
       noticeId:item.noticeId,
       publishTime:new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
