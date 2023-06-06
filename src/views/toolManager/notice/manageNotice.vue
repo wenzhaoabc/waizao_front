@@ -172,7 +172,13 @@ const publishNotice = async (noticeId:number) => {
   const item = tabledata1[index];
   console.log(item)
   const globalStore = GlobalStore();
-  console.log(globalStore.userInfo)
+  console.log("下面是用户的角色")
+  console.log(globalStore.userInfo.roles)
+  if (!globalStore.userInfo.roles.includes('manager')) {
+    console.warn('警告：roles数组中不包含manager！');
+    ElMessage.error("发布失败，您不是管理员");
+    return;
+  }
   const res = await updateNoticeApi({
       noticeId:item.noticeId,
       publishTime:new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate(),
