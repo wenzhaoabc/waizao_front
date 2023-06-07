@@ -264,3 +264,15 @@ export namespace Feedback {
 		replyEr: string
 	}
 }
+
+// * 视频模块
+export namespace Video {
+	export interface ResVideo {
+		videoId: number,
+		personnum: number,
+		status: string,
+		starttime: string,
+		endtime: string,
+		descrip:string,
+	}
+}

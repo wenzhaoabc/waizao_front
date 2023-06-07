@@ -1,45 +1,46 @@
 <template>
   <span>待发布</span>
-  <div>
-    <el-row :span="4" v-for="item in tabledata1" :key="item.noticeId" :offset="1" style="margin-bottom: 15px">
-      <el-card :body-style="{
-          padding: '15px',
-          width: '1300px',
-          height: '150px',
-        }" shadow="hover">
-        <el-descriptions class="margin-top" title="公告内容" :column="4">
-          <template #extra>
-            <el-button type="primary" @click="deleteNotice(item.noticeId)">删除</el-button>
-            <el-button type="warning" @click="textcontent=item.content,nownoticeid=item.noticeId,editdialogVisible=true">重新编辑</el-button>
-            <el-button type="success" @click="publishNotice(item.noticeId)">发布</el-button>
-          </template>
-          <el-descriptions-item label="公告状态："  span="2" width="400px">{{ item.state }}</el-descriptions-item>
-          <el-descriptions-item label="发布部门："  span="2" width="400px">{{ item.publisher }}</el-descriptions-item>
-          <el-descriptions-item label="预定发布时间："  span="2" width="400px">{{ item.willTime }}</el-descriptions-item>
-          <el-descriptions-item label="公告内容：" span="2"><el-button @click="previewcontent(item.content)" type="primary" plain>点击预览</el-button></el-descriptions-item>
-        </el-descriptions>
-      </el-card>
-    </el-row>
+  <div class="container">
+    <div style="width:100%">
+      <el-row :span="4" v-for="item in tabledata1" :key="item.noticeId" :offset="1" style="margin-bottom: 15px">
+        <div style="width:100%">
+          <el-card class="card" shadow="hover">
+            <el-descriptions class="margin-top" title="公告内容" :column="4">
+              <template #extra>
+                <el-button type="primary" @click="deleteNotice(item.noticeId)">删除</el-button>
+                <el-button type="warning" @click="textcontent=item.content,nownoticeid=item.noticeId,editdialogVisible=true">重新编辑</el-button>
+                <el-button type="success" @click="publishNotice(item.noticeId)">发布</el-button>
+              </template>
+              <el-descriptions-item label="公告状态："  span="2" width="400px">{{ item.state }}</el-descriptions-item>
+              <el-descriptions-item label="发布部门："  span="2" width="400px">{{ item.publisher }}</el-descriptions-item>
+              <el-descriptions-item label="预定发布时间："  span="2" width="400px">{{ item.willTime }}</el-descriptions-item>
+              <el-descriptions-item label="公告内容：" span="2"><el-button @click="previewcontent(item.content)" type="primary" plain>点击预览</el-button></el-descriptions-item>
+            </el-descriptions>
+          </el-card>
+        </div>
+       
+      </el-row>
+    </div>
+   
   </div>
   <span>已发布</span>
-  <div>
-    <el-row :span="4" v-for="item in tabledata2" :key="item.content" :offset="1" style="margin-bottom: 15px">
-      <el-card :body-style="{
-        padding: '15px',
-        width: '1300px',
-        height: '150px',
-      }" shadow="hover">
-        <el-descriptions class="margin-top" title="公告内容" :column="4">
-          <template #extra>
-            <el-button type="primary" @click="dialogFormVisible=true,nownoticeid=item.noticeId">撤回</el-button>
-          </template>
-          <el-descriptions-item label="公告状态：" span="2" width="400px">{{ item.state }}</el-descriptions-item>
-          <el-descriptions-item label="发布部门：" span="2" width="400px">{{ item.publisher }}</el-descriptions-item>
-          <el-descriptions-item label="发布时间：" span="2" width="400px">{{ item.publishTime }}</el-descriptions-item>
-          <el-descriptions-item label="公告内容：" span="2"><el-button @click="previewcontent(item.content)" type="primary" plain>点击预览</el-button></el-descriptions-item>
-        </el-descriptions>
-      </el-card>
-    </el-row>
+  <div class="container">
+    <div style="width:100%">
+      <el-row :span="4" v-for="item in tabledata2" :key="item.content" :offset="1" style="margin-bottom: 15px;">
+        <el-card class="card" shadow="hover">
+          <el-descriptions class="margin-top" title="公告内容" :column="4">
+            <template #extra>
+              <el-button type="primary" @click="dialogFormVisible=true,nownoticeid=item.noticeId">撤回</el-button>
+            </template>
+            <el-descriptions-item label="公告状态：" span="2" width="400px">{{ item.state }}</el-descriptions-item>
+            <el-descriptions-item label="发布部门：" span="2" width="400px">{{ item.publisher }}</el-descriptions-item>
+            <el-descriptions-item label="发布时间：" span="2" width="400px">{{ item.publishTime }}</el-descriptions-item>
+            <el-descriptions-item label="公告内容：" span="2"><el-button @click="previewcontent(item.content)" type="primary" plain>点击预览</el-button></el-descriptions-item>
+          </el-descriptions>
+        </el-card>
+      </el-row>
+    </div>
+    
 
     <el-dialog v-model="dialogFormVisible" title="确认时间" style="width:500px;height: 250px">
       <el-form :model="form">
@@ -247,4 +248,18 @@ const editTimeNotice = async () => {
 
 <style scoped lang="scss">
 @import "./index.scss";
+.container {
+  margin-right:0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* 可选 */
+  width: 100%;
+}
+.card {
+  width: 100%; /* 设置卡片宽度为容器宽度的 100% */
+  max-width: 1300px;
+  height: 100%;
+  padding: 15px;
+  margin-right:0%;
+}
 </style>

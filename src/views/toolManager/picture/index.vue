@@ -2,23 +2,24 @@
   <div class="parent">
     <div class="child1">
       <el-row
-        :span="4"
+        :span="1"
         v-for="item in tabledata"
         :key="item.url"
         :offset="1"
-        style="margin-bottom: 15px"
+        style="margin-bottom: 2%"
       >
         <el-card
+          :span="1"
           :body-style="{
-            padding: '15px',
-            width: '1300px',
-            height: '150px',
+            padding: '2%',
+            width: '100%',
+            height: '10%',
             display: 'flex',
           }"
-          shadow="hover"
+         
         >
           <el-image
-            style="width: 400px; height: 150px; flex: 1"
+            style="width:900px;height: 150px; flex: 1; object-fit: cover;"
             :src="item.url"
             :preview-src-list="[item.url]"
             fit="cover"
@@ -34,9 +35,9 @@
               display: flex;
               flex-direction: column;
               align-items: right;
-              margin-left: 200px;
-              margin-top: 20px;
-              margin-right: 20px;
+              margin-left: 20%;
+              margin-top: 5%;
+              margin-right: 5%;
             "
           >
             <el-text class="mx-1" size="large">图片上传时间：{{ item.time }}</el-text>
@@ -173,7 +174,7 @@ const uploadImage = async (val: any) => {
 
 <style scoped>
 .block {
-  padding: 30px 0;
+  padding: 10% 0;
   text-align: center;
   border-right: solid 1px var(--el-border-color);
   display: inline-block;
@@ -188,7 +189,7 @@ const uploadImage = async (val: any) => {
   display: block;
   color: var(--el-text-color-secondary);
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 5%;
 }
 .image-slot {
   display: flex;
@@ -202,22 +203,23 @@ const uploadImage = async (val: any) => {
 }
 .parent {
   position: relative;
-  height: 685px;
+  width: 98%;
+  height: 98%;
 }
 
 .child1 {
   position: absolute;
-  top: 40;
+  top: 5%;
   left: 0;
   right: 0;
-  bottom: 70px;
-  height: 630px; /* 设置高度 */
+  bottom: 5%;
+  height: 100%; /* 设置高度 */
   overflow-y: auto; /* 设置滚动条 */
 }
 .child2 {
   position: absolute;
-  bottom: 10px;
-  right: 30px;
-  height: 40px;
+  bottom: -5%;
+  right: 5%;
+  height: 10%;
 }
 </style>
