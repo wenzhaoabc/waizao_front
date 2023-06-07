@@ -1,45 +1,60 @@
 <template>
   <div class="parent">
     <div class="child1">
-      <el-row :span="4" v-for="item in tabledata" :key="item.content" :offset="1" style="margin-bottom: 15px">
-        <el-card :body-style="{
-          padding: '15px',
-          width: '1300px',
-          height: '180px',
-          display: 'flex',
-        }" shadow="hover">
-          <el-image
-            style="width: 500px; height: 180px"
-            :src="item.img"
-            :preview-src-list="[item.img]"
-            fit="cover">
-            <template #error>
-              <div class="image-slot">
-                <el-icon><icon-picture/></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div style="display: flex;
-            flex-direction: column;
-            align-items: right;
-            margin-left: 200px;
-            margin-top: 20px;
-            margin-right: 20px;
-            weight: 600px">
-            <el-descriptions class="margin-top" title="要闻内容" :column="4" :size="large">
-              <template #extra>
-                <el-button type="warning" @click="handleDelete(item.newsId)">删除</el-button>
+      <div style="width:100%">
+        <el-row :span="4" v-for="item in tabledata" :key="item.content" :offset="1" style="margin-bottom: 15px" >
+          <div style="width:100%">
+            <el-card :body-style="{
+              padding: '15px',
+              width: '100%',
+              height: '30%',
+              display: 'flex',
+            }" shadow="hover">
+            <div style="width:100%;height:100%">
+              <el-image
+              style="width: 600px; height: 200px"
+              :src="item.img"
+              :preview-src-list="[item.img]"
+              fit="cover">
+              <template #error>
+                <div class="image-slot">
+                  <el-icon><icon-picture/></el-icon>
+                </div>
               </template>
-              <el-descriptions-item label="发布内容：" span="4">{{
-                item.content
-              }}</el-descriptions-item>
-              <el-descriptions-item label="链接类型：" span="1" width="250px">{{ item.linkType }}</el-descriptions-item>
-              <el-descriptions-item label="发布链接：" span="1" width="180px"><el-link :href="item.link" target="_blank" type="primary">点击链接</el-link></el-descriptions-item>
-              <el-descriptions-item label="发布时间：" span="2" width="180px">{{item.publishTime}}</el-descriptions-item>
-            </el-descriptions>
+            </el-image>
+            </div>
+             
+            <div style="width:100%;margin-left:5%;margin-right:5%">
+              <el-descriptions :column="4" size="large">
+                <template #extra>
+                  <el-button type="warning" @click="handleDelete(item.newsId)">删除</el-button>
+                </template>
+                <el-descriptions-item class="break-line" label="发布内容：" span="4">{{ item.content }}</el-descriptions-item>
+                <el-descriptions-item class="break-line" label="链接类型：" span="1" width="180px">
+                  <div>
+                    <el-tooltip class="item" effect="dark" :content="item.linkType" placement="top-start">
+                      <el-link>查看详情</el-link>
+                    </el-tooltip>
+                  </div>
+                 
+                </el-descriptions-item>
+                <el-descriptions-item class="break-line" label="发布链接：" span="1" width="180px">
+                  <div>
+                    <el-link :href="item.link" target="_blank" type="primary">点击链接</el-link>
+                  </div>
+                  
+                </el-descriptions-item>
+                <el-descriptions-item class="break-line" label="发布时间：" span="2" width="180px">
+                  <div>{{item.publishTime}}</div>
+                </el-descriptions-item>
+              </el-descriptions>
+            </div>
+            </el-card>
           </div>
-        </el-card>
-      </el-row>
+          
+        </el-row>
+      </div>
+     
     </div>
     <div class="child2">
       <el-button type="primary" size="large" @click="dialogFormVisible = true">添加要闻</el-button>
@@ -85,7 +100,8 @@ import Img from '@/components/Upload/Img.vue';
 import {getNewsApi,addNewApi,deleteNewApi,addImgApi} from "@/api/modules/toolManage";
 const dialogFormVisible = ref(false)
 const formLabelWidth = '140px'
-const upload =ref()
+const upload = ref()
+const showDetails=ref(false)
 const tabledata= reactive<Tool.ResNews[]>([
   {
 		newsId: 1,
@@ -196,7 +212,7 @@ const handleDelete = async (newsId: number) => {
 }
 .parent {
   position: relative;
-  height: 685px;
+  height: 100%;
 }
 .image-slot {
   display: flex;
@@ -210,17 +226,24 @@ const handleDelete = async (newsId: number) => {
 }
 .child1 {
   position: absolute;
-  top: 40;
+  top: 5%;
   left: 0;
   right: 0;
-  bottom: 70px;
-  height: 630px; /* 设置高度 */
+  bottom: 10%;
+  height: 100%; /* 设置高度 */
   overflow-y: auto; /* 设置滚动条 */
 }
 .child2 {
   position: absolute;
-  bottom: 10px;
-  right: 30px;
-  height: 40px;
+  bottom: 5%;
+  right: 5%;
+  height: 5%;
+}
+.break-line .el-descriptions__label,
+.break-line .el-descriptions__content {
+  display: block;
+}
+.el-descriptions-item {
+  width: 100%;
 }
 </style>

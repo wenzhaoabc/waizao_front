@@ -349,7 +349,7 @@ const refreshdata = () => {
 }
 
 .dialog-footer button:first-child {
-  margin-right: 10px;
+  margin-right: 10%;
 }
 
 .el-input {
