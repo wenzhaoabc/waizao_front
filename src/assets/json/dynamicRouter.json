@@ -328,6 +328,53 @@
 					}
 				}
 			]
+		},
+		{
+			"path": "/videoManager",
+			"name": "videoManager",
+			"redirect": "/videoManager/vidioScreen",
+			"meta": {
+				"icon": "Tools",
+				"title": "视频管理",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true,
+				"roles": ["admin"]
+			},
+			"children": [
+				{
+					"path": "/videoManager/vidioScreen",
+					"name": "vidioScreen",
+					"component": "/videoManager/videoScreen/index",
+					"meta": {
+						"icon": "UserFilled",
+						"title": "我的会议",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/videoManager/videoRecord",
+					"name": "videoRecord",
+					"component": "/videoManager/videoRecord/index",
+					"meta": {
+						"icon": "Stamp",
+						"title": "视频记录",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				}
+			]
 		}
 	],
 	"msg": "成功"
