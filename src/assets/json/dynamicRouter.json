@@ -295,7 +295,24 @@
 						"isAffix": false,
 						"isKeepAlive": true,
 						"roles": ["admin"]
-					}
+					},
+					"children":[
+						{
+							"path": "/space-design/element/viewer",
+							"name": "threeViewer",
+							"component": "/spaceDesign/elements/threeViewer",
+							"meta":{
+								"icon": "House",
+								"title": "模型预览",
+								"isLink": false,
+								"isHide": true,
+								"isFull": true,
+								"isAffix": false,
+								"isKeepAlive": true,
+								"roles": ["admin"]
+							}
+						}
+					]
 				},
 				{
 					"path": "/space-design/viewDesign",
