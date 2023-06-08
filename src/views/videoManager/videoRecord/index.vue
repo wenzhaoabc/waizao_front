@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <a href="https://localhost:8103/" target="_blank">进入会议</a>
+            <a href="https://1.15.177.18:8103/" target="_blank">进入会议</a>
         </div>
         <el-table :data="tableData3" style="width: 100%" height="630px">
             <el-table-column label="会议号" prop="videoId" />
@@ -24,17 +24,20 @@ import { onMounted } from "vue";
 import { Video } from "@/api/interface";
 import {getVideosApi,deleteVideosApi } from "@/api/modules/videoManage";
 import { ElMessageBox, ElForm,ElMessage } from "element-plus";
-const tableData3: Video.ResVideo[] = [
-];
+import { ref } from 'vue';
+
+const tableData3 = ref<Video.ResVideo[]>([]);
 //Methods
 onMounted(async () => {
     getAllVideo();
 });
 
 const getAllVideo = async () => {
-    const { data } = await getVideosApi();
-  console.log(data)
-  tableData3.splice(0, tableData3.length, ...data);
+  const { data } = await getVideosApi();
+  // console.log(data)
+  tableData3.value.splice(0, tableData3.length, ...data);
+  console.log("下面是tabldata3的数据")
+  console.log(tableData3)
 };
 
 const handleDelete = async (index: number, row: Video.ResVideo) => {

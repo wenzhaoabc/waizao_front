@@ -149,21 +149,6 @@ const tableData: User.ResUser[] = [
     setting: "123",
     residence: "123",
     created: "123"
-  },
-  {
-    userId: 1,
-    citizenId: "123456",
-    phone: "123456",
-    wechatId: "123",
-    password: "123",
-    userName: "李四",
-    avatar: "123",
-    sex: "123",
-    birthdate: "123",
-    roles: "123",
-    setting: "123",
-    residence: "123",
-    created: "123"
   }
 ];
 const form = reactive<User.ResUser>({
