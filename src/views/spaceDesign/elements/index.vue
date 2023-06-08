@@ -15,7 +15,14 @@
                         <el-button size="small" type="danger" @click="changeTypeImg(t.typeId)">更换</el-button>
                     </div>
                     <div class="block" v-for="(i, index) in t.items" :key="i.itemId">
-                        <el-image class="item-img" :src="i.imgPath" :lazy="true" />
+                        <el-image class="item-img" :src="i.imgPath" :lazy="true"
+                            :preview-src-list="t.items.map(img => img.imgPath)" :preview-teleported="true"
+                            :initial-index="index">
+                            <template #viewer>
+                                <h1>VIEWER内容</h1>
+                                <p>{{ i.imgPath }}</p>
+                            </template>
+                        </el-image>
                         <span>{{ i.name }}</span>
                         <el-button size="small" type="danger" @click="deleteItem(t.typeId, i.itemId)">删除</el-button>
                     </div>
@@ -28,7 +35,7 @@
         <el-scrollbar>
             <div class="scroll-h">
                 <div class="block" v-for="(i, index) in armodels" :key="i.id">
-                    <el-image class="item-img" :src="i.imgPath" :lazy="true" />
+                    <el-image class="item-img" :src="i.imgPath" :lazy="true" @click="handleThreeView(i)" />
                     <span>{{ i.name }}</span>
                     <el-button size="small" type="danger" @click="deleteArModel(i.id)">删除</el-button>
                 </div>
@@ -117,7 +124,7 @@ import * as api from '@/api/modules/design';
 import { Design } from '@/api/interface/index';
 import Img from '@/components/Upload/Img.vue';
 import { ElEmpty, ElMessage } from 'element-plus';
-import { el } from 'element-plus/es/locale';
+import { useRouter } from 'vue-router';
 
 const elements = ref<Design.Type[]>()
 // * AR设计元素
@@ -233,7 +240,18 @@ const addNewArModel = async () => {
     }
 }
 
-
+/**
+ * 3维模型预览
+ */
+const router = useRouter()
+const handleThreeView = (arModel: Design.ARModel) => {
+    const modelUrl = arModel.model;
+    if (modelUrl == undefined || modelUrl == "") {
+        ElMessage({ message: "暂无立体模型", type: "warning" })
+        return;
+    }
+    router.push({ path: '/space-design/element/viewer', query: { url: modelUrl } })
+}
 
 onMounted(async () => {
     const { data: allElem } = await api.getAllDesignElementApi()
