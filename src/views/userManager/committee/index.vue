@@ -16,14 +16,9 @@ import type { TableColumnCtx } from "element-plus";
 import { onMounted } from "vue";
 import { User } from "@/api/interface";
 import { getVisitorsApi } from "@/api/modules/userManage";
-const tableData: User.ResVisitor[] = [
-  {
-    wechatId: "123",
-    nickname:"123",
-    loginTime: "123",
-    loginAddress: "123",
-  }
-];
+import { ref } from 'vue';
+
+const tableData = ref<User.ResVisitor[]>([]);
 //Methods
 onMounted(async () => {
   getAllVisitor();
@@ -31,7 +26,8 @@ onMounted(async () => {
 
 const getAllVisitor = async () => {
   const { data } = await getVisitorsApi();
-  tableData.splice(0, tableData.length, ...data);
+  tableData.value.splice(0, tableData.length, ...data);
+  console.log(tableData)
 };
 
 </script>

@@ -21,9 +21,10 @@ import { onMounted } from "vue";
 import { GlobalStore } from '@/stores';
 import { Video } from "@/api/interface";
 import {getMyVideosApi,deleteMyVideosApi } from "@/api/modules/videoManage";
-import { ElMessageBox, ElForm,ElMessage } from "element-plus";
-const tableData2: Video.ResVideo[] = [
-];
+import { ElMessageBox, ElForm, ElMessage } from "element-plus";
+import { ref } from 'vue';
+
+const tableData2 = ref<Video.ResVideo[]>([]);
 //Methods
 onMounted(async () => {
   getMyAllVideo();
@@ -36,7 +37,7 @@ const getMyAllVideo = async () => {
   const phone = globalStore.userInfo.phone;
   const { data } = await getMyVideosApi(phone);
   console.log(data)
-  tableData2.splice(0, tableData2.length, ...data);
+  tableData2.value.splice(0, tableData2.length, ...data);
 };
 
 const handleDelete = async (index: number, row: Video.ResVideo) => {
