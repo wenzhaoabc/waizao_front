@@ -35,7 +35,7 @@ onMounted(async () => {
 const getAllVideo = async () => {
   const { data } = await getVideosApi();
   // console.log(data)
-  tableData3.value.splice(0, tableData3.length, ...data);
+  tableData3.value.splice(0, tableData3.value.length, ...data);
   console.log("下面是tabldata3的数据")
   console.log(tableData3)
 };
