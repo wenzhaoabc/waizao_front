@@ -1,24 +1,5 @@
 <template>
   <div>
-    <el-table :data="filterTableData" style="width: 100%" height="630px">
-      <el-table-column label="姓名" prop="userName" />
-      <el-table-column label="电话" prop="phone" />
-      <el-table-column label="微信id" prop="wechatId" />
-      <el-table-column label="性别" prop="sex" />
-      <el-table-column label="生日" prop="birthdate" />
-      <el-table-column label="角色" prop="roles" />
-      <el-table-column label="住址" prop="residence" />
-      <el-table-column label="创建时间" prop="created" />
-      <el-table-column align="right">
-        <template #header>
-          <el-input v-model="search" size="small" placeholder="按照姓名查询" />
-        </template>
-        <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
     <div id="buttons">
       <!-- Form -->
       <el-button type="warning" @click="downloadExcel">下载EXCEL模版</el-button>
@@ -43,7 +24,7 @@
       <el-button type="success" @click="exportToPdf()">
         导出PDF
       </el-button>
-      <el-dialog v-model="dialogFormVisible" title="新增村民信息" style="width:600px">
+      <el-dialog v-model="dialogFormVisible" title="新增用户信息" style="width:600px">
         <el-form :model="form" :rules="addUserRules">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form.userName" autocomplete="off" clearable />
@@ -61,7 +42,7 @@
             <el-date-picker v-model="form.birthdate" type="date" placeholder="请选择你的出生日期" :label-width="formLabelWidth" />
           </el-form-item>
           <el-form-item label="角色" :label-width="formLabelWidth">
-            <el-select v-model="form.roles" multiple placeholder="请选择角色">
+            <el-select v-model="form.roles" placeholder="请选择角色">
               <el-option v-for="item in rolesoptions" :key="item.value" :label="item.label" :value="item.value"
                 clearable />
             </el-select>
@@ -88,7 +69,7 @@
           </span>
         </template>
       </el-dialog>
-      <el-dialog v-model="dialogFormVisible1" title="编辑村民信息" style="width:600px">
+      <el-dialog v-model="dialogFormVisible1" title="编辑用户信息" style="width:600px">
         <el-form :model="form1" :rules="addUserRules">
           <el-form-item label="姓名" :label-width="formLabelWidth">
             <el-input v-model="form1.userName" autocomplete="off" clearable />
@@ -106,7 +87,7 @@
             <el-date-picker v-model="form1.birthdate" type="date" placeholder="请选择你的出生日期" :label-width="formLabelWidth" />
           </el-form-item>
           <el-form-item label="角色" :label-width="formLabelWidth">
-            <el-select v-model="form1.roles" multiple placeholder="请选择角色">
+            <el-select v-model="form1.roles" placeholder="请选择角色">
               <el-option v-for="item in rolesoptions" :key="item.value" :label="item.label" :value="item.value"
                 clearable />
             </el-select>
@@ -136,12 +117,32 @@
       <!-- <el-button type="warning"  @click="exportExcel">导出EXCEL表格</el-button> -->
       <!-- <el-button type="warning">导出PDF</el-button> -->
     </div>
+    <el-table :data="filterTableData" style="width: 100%;">
+      <el-table-column label="姓名" prop="userName" />
+      <el-table-column label="电话" prop="phone" />
+      <el-table-column label="微信id" prop="wechatId" />
+      <el-table-column label="性别" prop="sex" />
+      <el-table-column label="生日" prop="birthdate" />
+      <el-table-column label="角色" prop="roles" />
+      <el-table-column label="住址" prop="residence" />
+      <el-table-column label="创建时间" prop="created" width="180"/>
+      <el-table-column align="right" width="160">
+        <template #header>
+          <el-input v-model="search" size="small" placeholder="按照姓名查询" />
+        </template>
+        <template #default="scope">
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
 <script setup lang="ts" name="villager">
 // import XLSX from "xlsx"
 // import * as fileSaver from 'file-saver';
+import { GlobalStore } from '@/stores';
 import { reactive, computed, ref, onMounted } from "vue";
 import { ElMessageBox, ElForm, ElMessage } from "element-plus";
 import type { UploadRawFile, UploadFile,  Action } from 'element-plus';
@@ -158,23 +159,7 @@ const dialogFormVisible = ref(false)
 const search = ref("")
 const dialogFormVisible1 = ref(false)
 const formLabelWidth = '140px'
-const tableData: User.ResUser[] = [
-  {
-    userId: 0,
-    citizenId: "123456",
-    phone: "123456",
-    wechatId: "123",
-    password: "123",
-    userName: "张三",
-    avatar: "123",
-    sex: "123",
-    birthdate: "123",
-    roles: "123",
-    setting: "123",
-    residence: "123",
-    created: "123"
-  }
-];
+const tableData = ref<User.ResUser[]>([]);
 const form = reactive<User.ResUser>({
   userId: 0,
   citizenId: "",
@@ -211,10 +196,6 @@ const rolesoptions = [
     label: '村民',
   },
   {
-    value: 'admin',
-    label: '管理员',
-  },
-  {
     value: 'manager',
     label: '村委会',
   },
@@ -244,8 +225,12 @@ onMounted(async () => {
 });
 const updateUser = async () => {
   try {
-    form1.roles = form1.roles.join(",");
     console.log(form1)
+    if(form1.roles.length==0){
+      ElMessage.error('请选择角色')
+      return
+    }
+    form1.birthdate = new Date(+new Date(form1.birthdate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').split(' ')[0]
     const { data } = await updateUserApi({ ...form1 });
     console.log(data);
     dialogFormVisible1.value = false
@@ -262,19 +247,45 @@ const updateUser = async () => {
 const getAllUser = async () => {
   const { data } = await getUsersApi();
   console.log(data);
-  tableData.splice(0, tableData.length, ...data);
+  tableData.value.splice(0, tableData.value.length, ...data);
+  // 遍历tableData数组，替换sex和roles属性
+  tableData.value = tableData.value.map((item) => {
+  // 将sex属性中的'male'替换为'男'，'female'替换为'女'
+  item.sex = item.sex === 'male' ? '男' : '女';
+  // 将roles属性中的'admin'替换为'村委会'，'manager'替换为'管理员'，'user'替换为'村民'
+  // 将多个角色用逗号分隔，并分割成角色数组
+  const rolesArray = item.roles.split(',');
+  // 遍历角色数组，替换角色名称
+  item.roles = rolesArray.map((role) => {
+    switch (role) {
+      case 'admin':
+        return '村委会';
+      case 'manager':
+        return '管理员';
+      case 'user':
+        return '村民';
+      default:
+        return role;
+    }
+  }).join(','); // 将替换后的角色数组用逗号拼接成字符串
+
+    // 输出替换后的roles属性
+    console.log(item.roles);
+
+  return item;
+});
   refreshdata();
 };
 const confirmDialog = async () => {
   try {
-    const dateString = new Date().toLocaleString()
+    const dateString = new Date().toLocaleString().replace(/\//g, "-");
     form.created = dateString
     if(form.roles.length==0){
       ElMessage.error('请选择角色')
       return
     }
-    form.roles = form.roles.join(",");
-    form.birthdate=new Date(+new Date(form.birthdate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').split(' ')[0]
+    form.birthdate = new Date(+new Date(form.birthdate) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').split(' ')[0]
+    console.log(form)
     const { data } = await addUserApi({ ...form });
     console.log(data);
     dialogFormVisible.value = false
@@ -283,7 +294,6 @@ const confirmDialog = async () => {
       message: '添加成功',
       type: 'success',
     })
-    refreshdata();
     Object.keys(form).forEach(key => {
       form[key] = "";
     });//清空表单
@@ -293,31 +303,47 @@ const confirmDialog = async () => {
   }
 }
 const filterTableData = computed(() =>
-  tableData.filter(
+  tableData.value.filter(
     (data) =>
       !search.value || data.userName.toLowerCase().includes(search.value.toLowerCase())
   )
 );
 const handleEdit = (index: number, row: User.ResUser) => {
+  console.log(row['roles'])
+  const nowrow = row['roles']
+  if (nowrow.includes('manager')) {
+    const globalStore = GlobalStore();
+    console.log("下面是用户的角色")
+    console.log(globalStore.userInfo.roles)
+    if (!globalStore.userInfo.roles.includes('manager')) {
+      console.warn('警告：roles数组中不包含manager！');
+      ElMessage.error("编辑失败，您不是管理员");
+      return;
+    }
+  } 
   dialogFormVisible1.value = true
   Object.keys(form1).forEach(key => {
-      if (key != "roles") {
-          form1[key] = row[key];
-      } else {
-          form1[key] = ""
-      }
-    });//赋值
+      form1[key] = row[key];
+  });//赋值
 };
 const handleDelete = async (index: number, row: User.ResUser) => {
+  const globalStore = GlobalStore();
+  console.log("下面是用户的角色")
+  console.log(globalStore.userInfo.roles)
+  if (!globalStore.userInfo.roles.includes('manager')) {
+    console.warn('警告：roles数组中不包含manager！');
+    ElMessage.error("删除失败，您不是管理员");
+    return;
+  }
   try {
-    await ElMessageBox.confirm("你确定删除这个村民的信息吗?", "提示", {
+    await ElMessageBox.confirm("你确定删除这个用户的信息吗?", "提示", {
       confirmButtonText: "确认",
       cancelButtonText: "取消",
       type: "warning",
     });
 
-    const index = tableData.findIndex((item) => item.userId === row.userId);
-    tableData.splice(index, 1);
+    const index = tableData.value.findIndex((item) => item.userId === row.userId);
+    tableData.value.splice(index, 1);
     refreshdata();
     console.log(row.userId)
     const { data } = await deleteUserApi(row.userId);
@@ -344,7 +370,6 @@ const downloadExcel=()=> {
     downloadWindow?.close();
   }, 2000);
 }
-
 
  //上传文件之前先判断该文件是否是Excel文件
 const beforeUpload=(file: UploadRawFile) =>{
@@ -379,6 +404,7 @@ const uploadAction = async (option: any) => {
       message: "成功",
       type: "success",
     });
+    uploadFile.value.clearFiles()
   } catch (error) {
     ElMessage.error("上传失败");
   }
@@ -405,7 +431,9 @@ const exportToPdf = async function () {
 
 <style scoped>
 #buttons {
-  margin-top: 20px;
+  width:100%;
+  right:5%;
+  margin-bottom: 1%;
   text-align: right;
 }
 
