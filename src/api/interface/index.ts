@@ -162,6 +162,13 @@ export namespace Design {
 		description: string,
 		imgPath: string,
 	}
+	export interface SiteDesign {
+		userId: number,
+		siteId: number,
+		imgPath: string,
+		text: string,
+		createTime: string | Date
+	}
 }
 
 // * 用户管理模块
@@ -273,6 +280,6 @@ export namespace Video {
 		status: string,
 		starttime: string,
 		endtime: string,
-		descrip:string,
+		descrip: string,
 	}
 }

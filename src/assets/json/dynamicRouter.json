@@ -21,7 +21,7 @@
 			"name": "userManager",
 			"redirect": "/userManager/villager",
 			"meta": {
-				"icon": "Tools",
+				"icon": "User",
 				"title": "用户管理",
 				"isLink": "",
 				"isHide": false,
@@ -68,7 +68,7 @@
 			"name": "contentReview",
 			"redirect": "/contentReview/content",
 			"meta": {
-				"icon": "Tools",
+				"icon": "View",
 				"title": "内容审核",
 				"isLink": "",
 				"isHide": false,
@@ -130,7 +130,7 @@
 					"name": "picture",
 					"component": "/toolManager/picture/index",
 					"meta": {
-						"icon": "UserFilled",
+						"icon": "DataBoard",
 						"title": "小程序首页图片",
 						"isLink": "",
 						"isHide": false,
@@ -145,7 +145,7 @@
 					"name": "news",
 					"component": "/toolManager/news/index",
 					"meta": {
-						"icon": "UserFilled",
+						"icon": "Tickets",
 						"title": "新闻管理",
 						"isLink": "",
 						"isHide": false,
@@ -177,7 +177,7 @@
 			"name": "messageManager",
 			"redirect": "/messageManager/villagerMess",
 			"meta": {
-				"icon": "Tools",
+				"icon": "ChatDotSquare",
 				"title": "消息管理",
 				"isLink": "",
 				"isHide": false,
@@ -224,7 +224,7 @@
 			"name": "spaceDesign",
 			"redirect": "/space-design/community-home",
 			"meta": {
-				"icon": "Tools",
+				"icon": "Guide",
 				"title": "公共空间设计",
 				"isLink": "",
 				"isHide": false,
@@ -320,7 +320,7 @@
 					"component": "/spaceDesign/viewDesign/index",
 					"meta": {
 						"icon": "UserFilled",
-						"title": "查看设计方案",
+						"title": "设计方案",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
@@ -337,7 +337,7 @@
 						"icon": "Stamp",
 						"title": "增添设计点位",
 						"isLink": "",
-						"isHide": false,
+						"isHide": true,
 						"isFull": false,
 						"isAffix": false,
 						"isKeepAlive": true,
@@ -351,8 +351,8 @@
 			"name": "videoManager",
 			"redirect": "/videoManager/vidioScreen",
 			"meta": {
-				"icon": "Tools",
-				"title": "视频管理",
+				"icon": "Camera",
+				"title": "即时协作",
 				"isLink": "",
 				"isHide": false,
 				"isFull": false,
@@ -366,7 +366,7 @@
 					"name": "vidioScreen",
 					"component": "/videoManager/videoScreen/index",
 					"meta": {
-						"icon": "UserFilled",
+						"icon": "VideoCameraFilled",
 						"title": "我的会议",
 						"isLink": "",
 						"isHide": false,
@@ -381,8 +381,8 @@
 					"name": "videoRecord",
 					"component": "/videoManager/videoRecord/index",
 					"meta": {
-						"icon": "Stamp",
-						"title": "视频记录",
+						"icon": "Film",
+						"title": "会议记录",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
