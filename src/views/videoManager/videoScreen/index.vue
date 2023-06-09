@@ -37,7 +37,7 @@ const getMyAllVideo = async () => {
   const phone = globalStore.userInfo.phone;
   const { data } = await getMyVideosApi(phone);
   console.log(data)
-  tableData2.value.splice(0, tableData2.length, ...data);
+  tableData2.value.splice(0, tableData2.value.length, ...data);
 };
 
 const handleDelete = async (index: number, row: Video.ResVideo) => {

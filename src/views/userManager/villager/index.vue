@@ -21,8 +21,27 @@
     </el-table>
     <div id="buttons">
       <!-- Form -->
-      <el-button type="primary" style="margin-right:15px" @click="dialogFormVisible = true">
+      <el-button type="warning" @click="downloadExcel">下载EXCEL模版</el-button>
+
+      <el-upload
+        ref="uploadFile"
+        action='#'
+        :before-upload="beforeUpload"
+        :limit="1"
+        :http-request="uploadAction"
+        :on-exceed="handleExceed"
+        style="display: inline-block;margin-left:1%;margin-right:1%"
+      >
+      <el-button class="box_text" type="warning">导入文件</el-button>
+      </el-upload>
+      <el-button type="primary" style="margin-right:2%" @click="dialogFormVisible = true">
         新增村民
+      </el-button>
+      <el-button type="success" @click="exportToExcel()">
+        导出EXCEL表格
+      </el-button>
+      <el-button type="success" @click="exportToPdf()">
+        导出PDF
       </el-button>
       <el-dialog v-model="dialogFormVisible" title="新增村民信息" style="width:600px">
         <el-form :model="form" :rules="addUserRules">
@@ -107,7 +126,6 @@
         </el-form>
         <template #footer>
           <span class="dialog-footer">
-            <!-- <el-button type="warning">以EXCEL导入</el-button> -->
             <el-button @click="dialogFormVisible1 = false">取消</el-button>
             <el-button type="primary" @click="updateUser">
               确认
@@ -115,8 +133,8 @@
           </span>
         </template>
       </el-dialog>
-      <!-- <el-button type="warning"  @click="exportExcel">导出EXCEL表格</el-button>
-      <el-button type="warning">导出PDF</el-button> -->
+      <!-- <el-button type="warning"  @click="exportExcel">导出EXCEL表格</el-button> -->
+      <!-- <el-button type="warning">导出PDF</el-button> -->
     </div>
   </div>
 </template>
@@ -125,13 +143,19 @@
 // import XLSX from "xlsx"
 // import * as fileSaver from 'file-saver';
 import { reactive, computed, ref, onMounted } from "vue";
-import { ElMessageBox, ElForm,ElMessage } from "element-plus";
+import { ElMessageBox, ElForm, ElMessage } from "element-plus";
+import type { UploadRawFile, UploadFile,  Action } from 'element-plus';
 import { User } from "@/api/interface";
-import { getUsersApi, addUserApi, deleteUserApi,updateUserApi } from "@/api/modules/userManage";
+import { getUsersApi, addUserApi, deleteUserApi, updateUserApi, addExcelApi,getNowExcelApi ,getNowPdfApi} from "@/api/modules/userManage";
 
-//Data
-const search = ref("");
+const uploadFile = ref();
+const state = reactive({
+    fileList: [],
+    fileName: '',
+})
+
 const dialogFormVisible = ref(false)
+const search = ref("")
 const dialogFormVisible1 = ref(false)
 const formLabelWidth = '140px'
 const tableData: User.ResUser[] = [
@@ -310,21 +334,73 @@ const refreshdata = () => {
   search.value = "1";
   search.value = ""; //此步是为了触发computed
 };
-// const exportExcel = () => {
-//   const sheetData = tableData as any[]
-//   const worksheet = XLSX.utils.json_to_sheet(sheetData)
-//   const workbook = XLSX.utils.book_new()
-//   XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1')
-//   const binaryData = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' })
-//   const blob = new Blob([s2ab(binaryData)], { type: 'application/octet-stream' })
-//   fileSaver.saveAs(blob, 'table.xlsx')
-// }
-// const s2ab = (s: any) => {
-//   const buf = new ArrayBuffer(s.length)
-//   const view = new Uint8Array(buf)
-//   for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF
-//   return buf
-// }
+
+const downloadExcel=()=> {
+  // const url = "/example.xlsx";
+  const url ="http://1.15.177.18:8080/例子.xlsx"
+  const downloadWindow = window.open(url, "_blank");
+  downloadWindow?.focus();
+  setTimeout(() => {
+    downloadWindow?.close();
+  }, 2000);
+}
+
+
+ //上传文件之前先判断该文件是否是Excel文件
+const beforeUpload=(file: UploadRawFile) =>{
+  const suffix = file.name.substr(file.name.lastIndexOf('.') + 1).toLowerCase();
+  if (suffix !== 'xlsx') {
+    ElMessage.error('上传的文件必须是 XLSX 格式!');
+    return false;
+  } else if (file.size / 1024 / 1024 > 2) {
+    ElMessage.error('文件大小不能超过2MB!');
+    return false;
+  }
+  return true;
+}
+//上传超过限制
+const handleExceed = (files: File[], fileList: UploadFile[]) => {
+    if (state.fileList.length >= 1) {
+        ElMessage.error('只能上传一个图片')
+        return;
+    }
+}
+
+const uploadAction = async (option: any) => {
+  console.log("下面是获取到的文件")
+  console.log(option.file)
+  const formData = new FormData();
+  formData.append("file", option.file);
+  try {
+    const { data } = await addExcelApi(formData);
+    console.log(data);
+    getAllUser();
+    ElMessage({
+      message: "成功",
+      type: "success",
+    });
+  } catch (error) {
+    ElMessage.error("上传失败");
+  }
+}
+const exportToExcel = async function () {
+  const { data } = await getNowExcelApi();
+  console.log(data)
+  const url = data.fileUrl;
+  const downloadWindow = window.open(url, "_blank");
+  downloadWindow?.focus();
+  setTimeout(() => {
+    downloadWindow?.close();
+  }, 2000);
+}
+
+const exportToPdf = async function () {
+  const { data } = await getNowPdfApi();
+  console.log(data)
+  const url = data.fileUrl;
+  const downloadWindow = window.open(url, "_blank");
+  downloadWindow?.focus();
+}
 </script>
 
 <style scoped>

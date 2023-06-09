@@ -26,7 +26,7 @@ onMounted(async () => {
 
 const getAllVisitor = async () => {
   const { data } = await getVisitorsApi();
-  tableData.value.splice(0, tableData.length, ...data);
+  tableData.value.splice(0, tableData.value.length, ...data);
   console.log(tableData)
 };
 

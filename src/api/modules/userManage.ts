@@ -26,3 +26,18 @@ export const deleteUserApi = (userId: number ) => {
 export const updateUserApi = (params: User.ResUser) => {
 	return http.post<Boolean>(PORT3 + `/userManage/updateUser`, params, { headers: { noLoading: true } }); 
 };
+
+// 上传EXCEL文件
+export const addExcelApi = (params: FormData) => {
+	return http.post<String>(PORT3 + `/userManage/getFileExcel`, params, { headers: { noLoading: true } });
+};
+
+// 获得当前用户excel文件
+export const getNowExcelApi = () => {
+    return http.get<User.ResUser>(PORT3 + `/userManage/getNowFileExcel`, {}, { headers: { noLoading: true } }); 
+};
+
+// 获得当前用户pdf文件
+export const getNowPdfApi = () => {
+    return http.get<User.ResUser>(PORT3 + `/userManage/getNowFilePDF`, {}, { headers: { noLoading: true } }); 
+};
