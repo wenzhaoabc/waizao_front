@@ -103,10 +103,10 @@ const addPicture = async () => {
     if (newPicture.imgPath.length > 0) {
         const { data } = await addShowImgApi(newPicture.imgPath);
         console.log(data)
-        getAllShowImg();
         ElMessage({ message: "添加成功", type: "success" })
         isaddPicture.value = false;
         newPicture.imgPath = ""
+        getAllShowImg();
     } else {
         ElMessage({ message: "上传图片不可为空", type: "error" })
     }

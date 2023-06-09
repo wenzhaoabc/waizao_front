@@ -228,7 +228,7 @@ const editNotice = async () => {
       publisher: item.publisher,
       content: textcontent.value,//更新内容
       state: "未发布",
-      willTime: item.willTime
+      willTime: new Date(+new Date(item.willTime) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').split(' ')[0]
     });
     if (res.code === 200) {
       ElMessage.success("修改成功");

@@ -53,6 +53,7 @@ const nowpublish = async () => {
     });
     if (res.code === 200) {
       ElMessage.success("发布成功");
+      location.reload();
     } else {
       ElMessage.error("发布失败");
     }
@@ -69,6 +70,7 @@ const laterpublish = async () => {
     });
     if (res.code === 200) {
       ElMessage.success("提交成功");
+      location.reload();
     } else {
       ElMessage.error("提交失败");
     }

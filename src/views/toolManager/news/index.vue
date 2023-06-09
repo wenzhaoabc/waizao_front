@@ -68,7 +68,7 @@
           <el-input v-model="form.link" autocomplete="off" clearable />
         </el-form-item>
         <el-form-item label="要闻类型" :label-width="formLabelWidth">
-          <el-select v-model="form.linkType" placeholder="请选择角色">
+          <el-select v-model="form.linkType" placeholder="请选择要闻类型">
             <el-option v-for="item in typesoptions" :key="item.value" :label="item.label" :value="item.value"
               clearable />
           </el-select>
@@ -168,7 +168,7 @@ const confirmDialog = async () => {
       message: '添加要闻成功',
       type: 'success',
     })
-    getAllNews();
+    location.reload();
     Object.keys(form).forEach(key => {
       form[key] = "";
     });//清空表单

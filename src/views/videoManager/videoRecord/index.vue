@@ -48,8 +48,8 @@ const handleDelete = async (index: number, row: Video.ResVideo) => {
       type: "warning",
     });
 
-    const index = tableData3.findIndex((item) => item.videoId === row.videoId);
-    tableData3.splice(index, 1);
+    const index = tableData3.value.findIndex((item) => item.videoId === row.videoId);
+    tableData3.value.splice(index, 1);
     console.log(row.videoId)
     const { data } = await deleteVideosApi(row.videoId);
     console.log(data);
