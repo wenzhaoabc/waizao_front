@@ -2,7 +2,7 @@
   <div>
     <el-form :model="form" label-width="120px">
       <el-form-item label="选择地点">
-        <el-input v-model="form.name"/>
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="地点名称">
         <el-input v-model="form.region" />
