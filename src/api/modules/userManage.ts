@@ -22,6 +22,13 @@ export const deleteUserApi = (userId: number ) => {
     return http.post(`${PORT3}/userManage/deleteUser?userId=${userId}`);
 };
 
+// 批量删除用户
+export const deleteUsersApi = (userIds: number[]) => {
+    return http.post(`${PORT3}/userManage/deleteUsers`, userIds, {
+        headers: { "Content-Type": "application/json" },
+    });
+};
+
 // 更新用户
 export const updateUserApi = (params: User.ResUser) => {
 	return http.post<Boolean>(PORT3 + `/userManage/updateUser`, params, { headers: { noLoading: true } }); 
