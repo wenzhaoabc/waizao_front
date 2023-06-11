@@ -41,3 +41,9 @@ export const deleteTypeApi = (typeId: number) => {
 export const deleteItemApi = (itemId: number) => {
     return http.delete<boolean>(PORT3 + `/design/item-id`, { itemId: itemId }, {})
 }
+
+// * 获取某个社区所有点位的设计稿
+export const getSiteDesignApi = () => {
+    let params = { cId: 1 }
+    return http.get<Design.SiteDesign[]>(PORT3 + `/design/site-community`, params, {});
+}

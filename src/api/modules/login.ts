@@ -75,3 +75,10 @@ export const logoutApi = () => {
 export const getUserInfoApi = (userId: number) => {
 	return http.get<User.UserInfo>(PORT3 + "/auth/any-userinfo", { userId: userId }, { headers: { noLoading: true } });
 }
+
+// * 修改用户密码
+export const changeUserPwdApi = (password: string) => {
+	let form = new FormData();
+	form.append("password", password)
+	return http.post<boolean>(PORT3 + `/auth/change-pwd`, form, {});
+}
