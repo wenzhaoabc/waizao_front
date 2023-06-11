@@ -19,7 +19,7 @@
 
 ### 在线预览 👀
 
-- Link：http://daoxaingli.com
+- Link：http://daoxiangli.com
 
 ### 代码仓库 ⭐
 
