@@ -5,9 +5,9 @@
     style="width: 100%"
   >
     <el-table-column prop="wechatId" label="微信ID" sortable width="180" />
-    <el-table-column prop="nickname" label="微信名称" width="250" />
-    <el-table-column prop="loginTime" label="登录时间" width="250" />
-    <el-table-column prop="loginAddress" label="登录地址" width="180" />
+    <el-table-column prop="nickname" label="微信名称" sortable width="250" />
+    <el-table-column prop="loginTime" label="登录时间" sortable width="250" />
+    <el-table-column prop="loginAddress" label="登录地址" sortable width="180" />
   </el-table>
 </template>
 
