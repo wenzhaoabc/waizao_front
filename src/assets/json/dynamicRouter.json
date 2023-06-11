@@ -319,8 +319,23 @@
 					"name": "viewDesign",
 					"component": "/spaceDesign/viewDesign/index",
 					"meta": {
-						"icon": "UserFilled",
+						"icon": "PictureRounded",
 						"title": "设计方案",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true,
+						"roles": ["admin"]
+					}
+				},
+				{
+					"path": "/space-design/votes",
+					"name": "votes",
+					"component": "/spaceDesign/votes/index",
+					"meta": {
+						"icon": "MessageBox",
+						"title": "方案投票",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
