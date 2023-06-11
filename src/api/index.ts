@@ -7,7 +7,6 @@ import { ElMessage } from "element-plus";
 import { GlobalStore } from "@/stores";
 import { LOGIN_URL } from "@/config/config";
 import router from "@/routers";
-import { StatusCode } from "./helper/statusCode";
 
 const config = {
 	// 默认地址请求地址，可在 .env.*** 文件中修改
@@ -55,10 +54,10 @@ class RequestHttp {
 				tryHideFullScreenLoading();
 
 				// * 登录Token过期，重新请求刷新Token
-				if (data.code == StatusCode.TokenExpired) {
+				if (response.headers && response.headers["Token-Expired"]) {
 					const refreshToken: string = globalStore.refreshToken;
 					if (refreshToken == null || refreshToken.length == 0) {
-						ElMessage.error("登录过期，请重新登录");
+						ElMessage.error("登录过期，请重新登录 111");
 						globalStore.setToken("", "");
 						router.replace(LOGIN_URL);
 						return Promise.reject(data);
@@ -79,12 +78,15 @@ class RequestHttp {
 							globalStore.setToken(data.data.newAccess, data.data.newRefresh);
 							return this.service.request(response.config);
 						} else {
-							ElMessage.error("登录过期，请重新登录");
+							ElMessage.error(data.msg);
 							globalStore.setToken("", "");
 							router.replace(LOGIN_URL);
 							return Promise.reject(data.msg);
 						}
 					}
+				} else if (data.code != 200) {
+					ElMessage.error(data.msg);
+					// return Promise.reject(data.msg);
 				}
 				return data;
 			}

@@ -167,7 +167,34 @@ export namespace Design {
 		siteId: number,
 		imgPath: string,
 		text: string,
-		createTime: string | Date
+		createTime: string | Date,
+		selected: boolean,
+	}
+	export interface ResSiteDesigns {
+		designs: SiteDesign[],
+		users: User.ResUserBase[],
+		sites: Site.SiteInfo[]
+	}
+}
+
+// * 点位投票模块
+export namespace Vote {
+	export interface DesignVote {
+		id: number,
+		userId: number,
+		communityId: number,
+		siteId: number,
+		imgPath: string,
+		draftText: string,
+		createdTime: string,
+		selected: boolean,
+		voteNum: number,
+		userIds: number[],
+	}
+	export interface ResVotes {
+		votes: DesignVote[],
+		users: User.ResUserBase[],
+		sites: Site.SiteInfo[]
 	}
 }
 
@@ -200,6 +227,12 @@ export namespace User {
 		roles: string;
 		setting: string;
 		residence: string;
+		created: string;
+	}
+	export interface ResUserBase {
+		userId: number;
+		userName: string;
+		avatar: string;
 		created: string;
 	}
 	export interface ResVisitor {

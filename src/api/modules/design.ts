@@ -1,6 +1,6 @@
 import http from "@/api";
 import { PORT3 } from "@/api/config/servicePort";
-import { Design } from "../interface";
+import { Design, Vote } from "../interface";
 
 // * 获取所有的设计元素
 export const getAllDesignElementApi = () => {
@@ -46,4 +46,19 @@ export const deleteItemApi = (itemId: number) => {
 export const getSiteDesignApi = () => {
     let params = { cId: 1 }
     return http.get<Design.SiteDesign[]>(PORT3 + `/design/site-community`, params, {});
+}
+
+// * 获取某个社区所有点位的设计稿 V2
+export const getAllDesignV2 = () => {
+    return http.get<Design.ResSiteDesigns>(PORT3 + `/design/all`, {}, {})
+}
+
+// * 将某一个设计设为投票候选项
+export const setDesignVoteApi = (sd: Design.SiteDesign) => {
+    return http.post<Vote.DesignVote>(PORT3 + `/vote/add-vote`, sd, { headers: { noLoading: true } })
+}
+
+// * 删除某个投票候选项
+export const cancelVoteDesignApi = (sd: Design.SiteDesign) => {
+    return http.post<boolean>(PORT3 + `/vote/del-design`, sd, { headers: { noLoading: true } });
 }
