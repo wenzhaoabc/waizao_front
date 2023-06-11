@@ -20,6 +20,7 @@
 </template>
   
 <script setup lang="ts">
+import { GlobalStore } from '@/stores';
 import { onMounted } from "vue";
 import { Video } from "@/api/interface";
 import {getVideosApi,deleteVideosApi } from "@/api/modules/videoManage";
@@ -41,6 +42,14 @@ const getAllVideo = async () => {
 };
 
 const handleDelete = async (index: number, row: Video.ResVideo) => {
+  const globalStore = GlobalStore();
+    console.log("下面是用户的角色")
+    console.log(globalStore.userInfo.roles)
+    if (!globalStore.userInfo.roles.includes('manager')) {
+      console.warn('警告：roles数组中不包含manager！');
+      ElMessage.error("删除失败，您不是管理员");
+      return;
+    }
   try {
     await ElMessageBox.confirm("你确定删除这条会议记录吗?", "提示", {
       confirmButtonText: "确认",
