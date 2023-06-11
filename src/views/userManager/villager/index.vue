@@ -2,8 +2,8 @@
   <div>
     <div id="buttons">
       <!-- Form -->
+      <el-button type="danger" @click="multiDelete()">多选删除</el-button>
       <el-button type="warning" @click="downloadExcel">下载EXCEL模版</el-button>
-
       <el-upload
         ref="uploadFile"
         action='#'
@@ -13,7 +13,7 @@
         :on-exceed="handleExceed"
         style="display: inline-block;margin-left:1%;margin-right:1%"
       >
-      <el-button class="box_text" type="warning">导入文件</el-button>
+      <el-button class="box_text" type="warning">批量导入用户</el-button>
       </el-upload>
       <el-button type="primary" style="margin-right:2%" @click="dialogFormVisible = true">
         新增村民
@@ -117,14 +117,15 @@
       <!-- <el-button type="warning"  @click="exportExcel">导出EXCEL表格</el-button> -->
       <!-- <el-button type="warning">导出PDF</el-button> -->
     </div>
-    <el-table :data="filterTableData" style="width: 100%;">
+    <el-table :data="filterTableData" style="width: 100%;" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" />
       <el-table-column label="姓名" prop="userName" />
       <el-table-column label="电话" prop="phone" />
       <el-table-column label="微信id" prop="wechatId" />
       <el-table-column label="性别" prop="sex" />
       <el-table-column label="生日" prop="birthdate" />
       <el-table-column label="角色" prop="roles" />
-      <el-table-column label="住址" prop="residence" />
+      <el-table-column label="住址" prop="residence" width="180"/>
       <el-table-column label="创建时间" prop="created" width="180"/>
       <el-table-column align="right" width="160">
         <template #header>
@@ -147,7 +148,9 @@ import { reactive, computed, ref, onMounted } from "vue";
 import { ElMessageBox, ElForm, ElMessage } from "element-plus";
 import type { UploadRawFile, UploadFile,  Action } from 'element-plus';
 import { User } from "@/api/interface";
-import { getUsersApi, addUserApi, deleteUserApi, updateUserApi, addExcelApi,getNowExcelApi ,getNowPdfApi} from "@/api/modules/userManage";
+import { getUsersApi, addUserApi, deleteUserApi,deleteUsersApi, updateUserApi, addExcelApi,getNowExcelApi ,getNowPdfApi} from "@/api/modules/userManage";
+
+const multipleSelection = ref<User.ResUser[]>([])
 
 const uploadFile = ref();
 const state = reactive({
@@ -219,6 +222,43 @@ const addUserRules = reactive({
 });
 
 //Methods
+const multiDelete = async () => {
+  console.log(multipleSelection.value)
+  const userIds = multipleSelection.value.map(item => item.userId);
+  console.log("下面是用户的id")
+  console.log(userIds);
+  const globalStore = GlobalStore();
+  console.log("下面是用户的角色")
+  console.log(globalStore.userInfo.roles)
+  if (!globalStore.userInfo.roles.includes('manager')) {
+    console.warn('警告：roles数组中不包含manager！');
+    ElMessage.error("删除失败，您不是管理员");
+    return;
+  }
+  try {
+    const len=userIds.length
+    await ElMessageBox.confirm(`共${len}个用户，你确定删除这些用户的信息吗?`, "提示", {
+      confirmButtonText: "确认",
+      cancelButtonText: "取消",
+      type: "warning",
+    });
+
+    const { data } = await deleteUsersApi(userIds);
+    getAllUser();
+    console.log(data);
+    ElMessage({
+      message: '删除成功',
+      type: 'success',
+    })
+  } catch (error) {
+    ElMessage.error('删除失败')
+  }
+}
+const handleSelectionChange = (val: User.ResUser[]) => {
+  multipleSelection.value = val
+  // console.log(multipleSelection.value)
+}
+
 onMounted(async () => {
   getAllUser();
   refreshdata();
@@ -245,35 +285,35 @@ const updateUser = async () => {
   }
 }
 const getAllUser = async () => {
-  const { data } = await getUsersApi();
-  console.log(data);
-  tableData.value.splice(0, tableData.value.length, ...data);
-  // 遍历tableData数组，替换sex和roles属性
-  tableData.value = tableData.value.map((item) => {
-  // 将sex属性中的'male'替换为'男'，'female'替换为'女'
-  item.sex = item.sex === 'male' ? '男' : '女';
-  // 将roles属性中的'admin'替换为'村委会'，'manager'替换为'管理员'，'user'替换为'村民'
-  // 将多个角色用逗号分隔，并分割成角色数组
-  const rolesArray = item.roles.split(',');
-  // 遍历角色数组，替换角色名称
-  item.roles = rolesArray.map((role) => {
-    switch (role) {
-      case 'admin':
-        return '村委会';
-      case 'manager':
-        return '管理员';
-      case 'user':
-        return '村民';
-      default:
-        return role;
-    }
-  }).join(','); // 将替换后的角色数组用逗号拼接成字符串
+    const { data } = await getUsersApi();
+    console.log(data);
+    tableData.value.splice(0, tableData.value.length, ...data);
+    // 遍历tableData数组，替换sex和roles属性
+    tableData.value = tableData.value.map((item) => {
+    // 将sex属性中的'male'替换为'男'，'female'替换为'女'
+    item.sex = item.sex === 'male' ? '男' : '女';
+    // 将roles属性中的'admin'替换为'村委会'，'manager'替换为'管理员'，'user'替换为'村民'
+    // 将多个角色用逗号分隔，并分割成角色数组
+    const rolesArray = item.roles.split(',');
+    // 遍历角色数组，替换角色名称
+    item.roles = rolesArray.map((role) => {
+      switch (role) {
+        case 'admin':
+          return '村委会';
+        case 'manager':
+          return '管理员';
+        case 'user':
+          return '村民';
+        default:
+          return role;
+      }
+    }).join(','); // 将替换后的角色数组用逗号拼接成字符串
 
-    // 输出替换后的roles属性
-    console.log(item.roles);
+      // 输出替换后的roles属性
+      console.log(item.roles);
 
-  return item;
-});
+    return item;
+  });
   refreshdata();
 };
 const confirmDialog = async () => {
