@@ -3,9 +3,9 @@
     <el-tab-pane label="广场" name="first">
       <square></square>
     </el-tab-pane>
-    <el-tab-pane label="设计" name="second">
+    <!-- <el-tab-pane label="设计" name="second">
       <design></design>
-    </el-tab-pane>
+    </el-tab-pane> -->
   </el-tabs>
 </template>
 
